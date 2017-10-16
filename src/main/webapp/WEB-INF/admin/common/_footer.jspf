@@ -1,0 +1,10 @@
+<script type="text/javascript" src="/score/js/jquery1.9.1.min.js"></script> 
+<script type="text/javascript" src="/score/lib/layer/layer.js"></script>
+<script type="text/javascript" src="/score/lib/laypage/laypage.js"></script>
+<script type="text/javascript" src="/score/lib/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/score/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/score/lib/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="/score/lib/h-ui.admin/js/H-ui.admin.js"></script>
+<script type="text/javascript" src="/score/lib/jquery.validation/jquery.validate.js"></script> 
+<script type="text/javascript" src="/score/lib/jquery.validation/validate-methods.js"></script> 
+<script type="text/javascript" src="/score/lib/jquery.validation/messages_zh.js"></script>

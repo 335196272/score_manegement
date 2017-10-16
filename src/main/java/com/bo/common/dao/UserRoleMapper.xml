@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.common.dao.UserRoleDao">
+  <resultMap id="UserRole" type="com.bo.common.entity.UserRole">
+    <id column="user_role_id" jdbcType="BIGINT" property="userRoleId" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_role_id, user_id, role_id
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.common.entity.UserRole">
+    insert into user_role (user_role_id, user_id, role_id)
+    values (#{userRoleId}, #{userId}, #{roleId})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from user_role
+    where user_role_id = #{userRoleId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.common.entity.UserRole">
+    update user_role
+    set user_id = #{userId},
+      role_id = #{roleId}
+    where user_role_id = #{userRoleId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="UserRole">
+    select 
+    <include refid="Base_Column_List" />
+    from user_role
+    where user_role_id = #{userRoleId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer">
+    select count(log_id)
+	from user_role
+    <where>
+      <if test="userId != null">
+        user_id = #{userId}
+      </if>
+      <if test="roleId != null">
+        and role_id = #{roleId}
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="UserRole">
+    select 
+    <include refid="Base_Column_List" />
+	from user_role
+    <where>
+      <if test="userId != null">
+        user_id = #{userId}
+      </if>
+      <if test="roleId != null">
+        and role_id = #{roleId}
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+</mapper>

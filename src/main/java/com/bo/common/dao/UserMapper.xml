@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.common.dao.UserDao">
+  <resultMap id="User" type="com.bo.common.entity.User">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_name, phone_number, email, password, pic_url, status, create_date, 
+    update_date, last_login_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.common.entity.User">
+    insert into user (user_id, user_name, phone_number, 
+      email, password, pic_url, 
+      status, create_date, update_date, 
+      last_login_date)
+    values (#{userId}, #{userName}, #{phoneNumber}, 
+      #{email}, #{password}, #{picUrl}, 
+      #{status}, #{createDate}, #{updateDate}, 
+      #{lastLoginDate})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from user
+    where user_id = #{userId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.common.entity.User">
+    update user
+    set user_name = #{userName},
+      phone_number = #{phoneNumber},
+      email = #{email},
+      password = #{password},
+      pic_url = #{picUrl},
+      status = #{status},
+      create_date = #{createDate},
+      update_date = #{updateDate},
+      last_login_date = #{lastLoginDate}
+    where user_id = #{userId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="User">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer">
+    select count(user_id)
+	from user
+    <where>
+      <if test="userName != null">
+        user_name like concat('%',#{userName},'%')
+      </if>
+      <if test="phoneNumber != null">
+        and phone_number = #{phoneNumber}
+      </if>
+      <if test="email != null">
+        and email = #{email}
+      </if>
+      <if test="status != null and status != -99">
+        and status = #{status}
+      </if>
+      <if test="ge_createDate != null" >
+	    <![CDATA[and create_date >= #{ge_createDate}]]> 
+      </if>
+      <if test="le_createDate != null" >
+        <![CDATA[and create_date <= #{le_accountDate}]]> 
+      </if>
+      <if test="ge_lastLoginDate != null" >
+	    <![CDATA[and last_login_date >= #{ge_lastLoginDate}]]> 
+      </if>
+      <if test="le_lastLoginDate != null" >
+        <![CDATA[and last_login_date <= #{le_lastLoginDate}]]> 
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="User">
+    select
+	<include refid="Base_Column_List" />
+	from user
+    <where>
+      <if test="userName != null">
+        user_name like concat('%',#{userName},'%')
+      </if>
+      <if test="phoneNumber != null">
+        and phone_number = #{phoneNumber}
+      </if>
+      <if test="email != null">
+        and email = #{email}
+      </if>
+      <if test="status != null and status != -99">
+        and status = #{status}
+      </if>
+      <if test="ge_createDate != null" >
+	    <![CDATA[and create_date >= #{ge_createDate}]]> 
+      </if>
+      <if test="le_createDate != null" >
+        <![CDATA[and create_date <= #{le_accountDate}]]> 
+      </if>
+      <if test="ge_lastLoginDate != null" >
+	    <![CDATA[and last_login_date >= #{ge_lastLoginDate}]]> 
+      </if>
+      <if test="le_lastLoginDate != null" >
+        <![CDATA[and last_login_date <= #{le_lastLoginDate}]]> 
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+  <select id="findByAccount" resultMap="User">
+    select
+	<include refid="Base_Column_List" />
+	from user
+	where (user_name = #{account} or phone_number = #{account} or email = #{account})
+  </select>
+  
+  <select id="login" resultMap="User">
+    select
+	<include refid="Base_Column_List" />
+	from user
+	where (user_name = #{account} or phone_number = #{account} or email = #{account})
+	and password = #{password}
+  </select>
+  
+  <!-- 获取正常状态用户信息列表 -->
+  <select id="listUser" resultMap="User">
+    select user_id, user_name
+	from user
+	where status = 1
+  </select>
+</mapper>

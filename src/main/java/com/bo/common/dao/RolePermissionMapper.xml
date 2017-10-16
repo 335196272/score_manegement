@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.common.dao.RolePermissionDao">
+  <resultMap id="RolePermission" type="com.bo.common.entity.RolePermission">
+    <id column="role_permission_id" jdbcType="BIGINT" property="rolePermissionId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="permission_id" jdbcType="BIGINT" property="permissionId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_permission_id, role_id, permission_id
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.common.entity.RolePermission">
+    insert into role_permission (role_permission_id, role_id, permission_id)
+    values (#{rolePermissionId}, #{roleId}, #{permissionId})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from role_permission
+    where role_permission_id = #{rolePermissionId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.common.entity.RolePermission">
+    update role_permission
+    set role_id = #{roleId},
+      permission_id = #{permissionId}
+    where role_permission_id = #{rolePermissionId}
+  </update>
+    
+  <select id="find" parameterType="java.lang.Long" resultMap="RolePermission">
+    select 
+    <include refid="Base_Column_List" />
+    from role_permission
+    where role_permission_id = #{rolePermissionId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer">
+    select count(role_permission_id)
+	from role_permission
+    <where>
+      <if test="roleId != null">
+        role_id = #{roleId}
+      </if>
+      <if test="permissionId != null">
+        and permission_id = #{permissionId}
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="RolePermission">
+    select
+	<include refid="Base_Column_List" />
+	from role_permission
+    <where>
+      <if test="roleId != null">
+        role_id = #{roleId}
+      </if>
+      <if test="permissionId != null">
+        and permission_id = #{permissionId}
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+</mapper>

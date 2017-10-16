@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.common.dao.LogDao">
+  <resultMap id="Log" type="com.bo.common.entity.Log">
+    <id column="log_id" jdbcType="BIGINT" property="logId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    log_id, name, action, detail, ip, create_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.common.entity.Log">
+    insert into log (log_id, name, action, ip, create_date, detail)
+    values (#{logId}, #{name}, #{action}, #{ip}, #{createDate}, #{detail})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from log
+    where log_id = #{logId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.common.entity.Log">
+    update log
+    set name = #{name},
+      action = #{action},
+      detail = #{detail}, 
+      ip = #{ip},
+      create_date = #{createDate}
+    where log_id = #{logId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="Log">
+    select 
+    <include refid="Base_Column_List" />
+    from log
+    where log_id = #{logId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer">
+    select count(log_id)
+	from log
+    <where>
+      <if test="name != null" >
+        name like concat('%',#{name},'%')
+      </if>
+      <if test="action != null" >
+        and action = #{action}
+      </if>
+      <if test="detail != null" >
+        and detail like concat('%',#{detail},'%')
+      </if>
+      <if test="ip != null" >
+        and ip = like concat('%',#{ip},'%')
+      </if>
+      <if test="ge_createDate != null" >
+	    <![CDATA[and create_date >= #{ge_createDate}]]> 
+	  </if>
+	  <if test="le_createDate != null" >
+	    <![CDATA[and create_date <= #{le_createDate}]]> 
+	  </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="Log">
+    select 
+    <include refid="Base_Column_List" />
+	from log
+    <where>
+      <if test="name != null" >
+        name like concat('%',#{name},'%')
+      </if>
+      <if test="action != null" >
+        and action = #{action}
+      </if>
+      <if test="detail != null" >
+        and detail like concat('%',#{detail},'%')
+      </if>
+      <if test="ip != null" >
+        and ip = like concat('%',#{ip},'%')
+      </if>
+      <if test="ge_createDate != null" >
+	    <![CDATA[and create_date >= #{ge_createDate}]]> 
+	  </if>
+	  <if test="le_createDate != null" >
+	    <![CDATA[and create_date <= #{le_createDate}]]> 
+	  </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+</mapper>

@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* 新增菜单栏无下拉菜单样式  */
+.Hui-aside .menu_dropdown span{line-height:35px; overflow:hidden; zoom:1}
+.Hui-aside .menu_dropdown span a{display:block;font-weight: bold; margin:0}
+.Hui-aside .menu_dropdown span a i{font-weight: normal;font-size:20px!important;color:blue!important}
+.Hui-aside .menu_dropdown dt span{line-height:32px}
+.Hui-aside .menu_dropdown dt span a{line-height:32px; border-bottom:none; font-weight:normal}
+.Hui-aside .menu_dropdown span a:hover{text-decoration:none}
+.Hui-aside .menu_dropdown span.current a,.menu_dropdown span.current a:hover{background-color:rgba(255,255,255,0.2)}
+.Hui-aside .menu_dropdown dt i{font-size:20px!important;color:blue!important}
+.Hui-aside .menu_dropdown li a i{font-weight: normal;font-size:20px!important;color:blue!important}
+
