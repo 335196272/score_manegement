@@ -10,4 +10,12 @@ import com.bo.score.entity.Classes;
  */
 public interface ClassesService extends BaseService<Classes> {
 
+	/**
+	 * 根据班级名称查询班级
+	 * @param name 班级名称
+	 * @return
+	 * @author DengJinbo, 2017年10月17日.<br>
+	 */
+	Classes findByName(String name);
+
 }

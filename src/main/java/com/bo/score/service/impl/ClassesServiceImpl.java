@@ -31,4 +31,15 @@ public class ClassesServiceImpl extends BaseServiceImpl<Classes> implements Clas
 		return (ClassesServiceImpl) SpringBeanFactoryUtil.getBean("classesService");
 	}
 
+	/**
+	 * 根据班级名称查询班级
+	 * @param name 班级名称
+	 * @return
+	 * @author DengJinbo, 2017年10月17日.<br>
+	 */
+	@Override
+	public Classes findByName(String name) {
+		return classesDao.findByName(name);
+	}
+
 }

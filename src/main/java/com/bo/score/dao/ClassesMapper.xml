@@ -81,4 +81,11 @@
     </if>
   </select>
   
+  <select id="findByName" resultMap="Classes">
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    where name = #{name}
+  </select>
+  
 </mapper>

@@ -133,7 +133,7 @@
 				<dl id="menu-borrow">
 					<dt>
 						<span>
-							<a data-href="2.html" data-title="班级管理" href="javascript:void(0)">
+							<a data-href="classes/list.html" data-title="班级管理" href="javascript:void(0)">
 								<i class="Hui-iconfont Hui-iconfont-log"></i>
 								<span style="font-size:16px;">班级管理</span>
 							</a>
