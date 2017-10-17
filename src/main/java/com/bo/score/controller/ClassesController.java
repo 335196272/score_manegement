@@ -176,8 +176,15 @@ public class ClassesController {
 			resultMap.put("msg", "删除失败，班级不存在！");
 			return resultMap;
 		}
-		classesService.delete(classesId);
-		logService.log(currentUser.getUserName(), LogTypeEnum.DELETE.getDesc(), "删除支付方式！", IpUtils.getIp(req));
+		try {
+			logService.log(currentUser.getUserName(), LogTypeEnum.DELETE.getDesc(), 
+					"删除班级：“" + entity.getName() + "”！", IpUtils.getIp(req));
+			classesService.delete(classesId);
+		} catch (Exception e) {
+			resultMap.put("status", 300);
+			resultMap.put("msg", "系统出现异常，删除失败！");
+			return resultMap;
+		}
 		resultMap.put("status", 200);
 		resultMap.put("msg", "删除成功！");
 		return resultMap;
