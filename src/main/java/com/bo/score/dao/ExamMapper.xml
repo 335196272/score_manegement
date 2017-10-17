@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.score.dao.ExamDao">
+  <resultMap id="Exam" type="com.bo.score.entity.Exam">
+    <id column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="exam_time" jdbcType="TIMESTAMP" property="examTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    exam_id, name, exam_time, create_by, create_date, update_by, update_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.score.entity.Exam">
+    insert into exam (exam_id, name, exam_time, 
+      create_by, create_date, update_by, update_date)
+    values (#{examId}, #{name}, #{examTime}, 
+      #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from exam
+    where exam_id = #{examId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.score.entity.Exam">
+    update exam
+    set name = #{name},
+      exam_time = #{examTime},
+      create_by = #{createBy},
+      create_date = #{createDate},
+      update_by = #{updateBy},
+      update_date = #{updateDate}
+    where exam_id = #{examId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="Exam">
+    select 
+    <include refid="Base_Column_List" />
+    from exam
+    where exam_id = #{examId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer" >
+    select count(classes_id)
+	from exam
+    <where>
+      <if test="name != null">
+        name like concat('%',#{name},'%')
+      </if>
+      <if test="ge_examTime != null" >
+	    <![CDATA[and exam_time >= #{ge_examTime}]]>
+      </if>
+      <if test="le_examTime != null" >
+        <![CDATA[and exam_time <= #{le_examTime}]]>
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="Exam" >
+    select 
+    <include refid="Base_Column_List" />
+    from exam
+    <where>
+      <if test="name != null">
+        name like concat('%',#{name},'%')
+      </if>
+      <if test="ge_examTime != null" >
+	    <![CDATA[and exam_time >= #{ge_examTime}]]>
+      </if>
+      <if test="le_examTime != null" >
+        <![CDATA[and exam_time <= #{le_examTime}]]>
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+</mapper>

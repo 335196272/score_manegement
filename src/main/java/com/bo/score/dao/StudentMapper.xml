@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.score.dao.StudentDao">
+  <resultMap id="Student" type="com.bo.score.entity.Student">
+    <id column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="student_number" jdbcType="BIGINT" property="studentNumber" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="entrance_time" jdbcType="TIMESTAMP" property="entranceTime" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    student_id, student_number, name, sex, entrance_time, create_by, create_date, update_by, 
+    update_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.score.entity.Student">
+    insert into student (student_id, student_number, name, 
+      sex, entrance_time, create_by, create_date, update_by, update_date)
+    values (#{studentId}, #{studentNumber}, #{name}, 
+      #{sex}, #{entranceTime}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from student
+    where student_id = #{studentId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.score.entity.Student">
+    update student
+    set student_number = #{studentNumber},
+      name = #{name},
+      sex = #{sex},
+      entrance_time = #{entranceTime},
+      create_by = #{createBy},
+      create_date = #{createDate},
+      update_by = #{updateBy},
+      update_date = #{updateDate}
+    where student_id = #{studentId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="Student">
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_id = #{studentId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer" >
+    select count(student_id)
+	from student
+    <where>
+      <if test="studentNumber != null">
+        student_number = #{studentNumber}
+      </if>
+      <if test="name != null">
+        and name like concat('%',#{name},'%')
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="ge_entranceTime != null" >
+	    <![CDATA[and entrance_time >= #{ge_examTime}]]>
+      </if>
+      <if test="le_entranceTime != null" >
+        <![CDATA[and entrance_time <= #{le_examTime}]]>
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="Student" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    <where>
+      <if test="studentNumber != null">
+        student_number = #{studentNumber}
+      </if>
+      <if test="name != null">
+        and name like concat('%',#{name},'%')
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+      <if test="ge_entranceTime != null" >
+	    <![CDATA[and entrance_time >= #{ge_examTime}]]>
+      </if>
+      <if test="le_entranceTime != null" >
+        <![CDATA[and entrance_time <= #{le_examTime}]]>
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+</mapper>

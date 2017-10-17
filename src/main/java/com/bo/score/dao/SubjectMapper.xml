@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.score.dao.SubjectDao">
+  <resultMap id="Subject" type="com.bo.score.entity.Subject">
+    <id column="subject_id" jdbcType="BIGINT" property="subjectId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="seq" jdbcType="INTEGER" property="seq" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    subject_id, name, seq, create_by, create_date, update_by, update_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.score.entity.Subject">
+    insert into subject (subject_id, name, seq, 
+      create_by, create_date, update_by, update_date)
+    values (#{subjectId}, #{name}, #{seq}, 
+      #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from subject
+    where subject_id = #{subjectId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.score.entity.Subject">
+    update subject
+    set name = #{name},
+      seq = #{seq},
+      create_by = #{createBy},
+      create_date = #{createDate},
+      update_by = #{updateBy},
+      update_date = #{updateDate}
+    where subject_id = #{subjectId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="Subject">
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where subject_id = #{subjectId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer" >
+    select count(subject_id)
+	from subject
+    <where>
+      <if test="name != null">
+        name like concat('%',#{name},'%')
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="Subject" >
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    <where>
+      <if test="name != null">
+        name like concat('%',#{name},'%')
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage}
+    </if>
+  </select>
+  
+</mapper>

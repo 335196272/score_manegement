@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.score.dao.ClassesDao">
+  <resultMap id="Classes" type="com.bo.score.entity.Classes">
+    <id column="classes_id" jdbcType="BIGINT" property="classesId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    classes_id, name, create_by, create_date, update_by, update_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.score.entity.Classes">
+    insert into classes (classes_id, name, create_by, 
+      create_date, update_by, update_date)
+    values (#{classesId}, #{name}, #{createBy}, 
+      #{createDate}, #{updateBy}, #{updateDate})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from classes
+    where classes_id = #{classesId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.score.entity.Classes">
+    update classes
+    set name = #{name},
+      create_by = #{createBy},
+      create_date = #{createDate},
+      update_by = #{updateBy},
+      update_date = #{updateDate}
+    where classes_id = #{classesId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="Classes">
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    where classes_id = #{classesId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer" >
+    select count(classes_id)
+	from classes
+    <where>
+      <if test="name != null">
+        name like concat('%',#{name},'%')
+      </if>
+      <if test="ge_updateDate != null" >
+	    <![CDATA[and update_date >= #{ge_updateDate}]]>
+      </if>
+      <if test="le_updateDate != null" >
+        <![CDATA[and update_date <= #{le_updateDate}]]>
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="Classes" >
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    <where>
+      <if test="name != null">
+        name like concat('%',#{name},'%')
+      </if>
+      <if test="ge_updateDate != null" >
+	    <![CDATA[and update_date >= #{ge_updateDate}]]>
+      </if>
+      <if test="le_updateDate != null" >
+        <![CDATA[and update_date <= #{le_updateDate}]]>
+      </if>
+    </where>
+    <if test="orderField != null" >
+      order by ${orderField} ${orderDirection} 
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage} 
+    </if>
+  </select>
+  
+</mapper>
