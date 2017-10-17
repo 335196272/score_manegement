@@ -4,7 +4,7 @@
 /*==============================================================*/
 
 
-drop table if exists class;
+drop table if exists classes;
 
 drop table if exists exam;
 
@@ -15,20 +15,20 @@ drop table if exists student;
 drop table if exists subject;
 
 /*==============================================================*/
-/* Table: class                                                 */
+/* Table: classes                                                 */
 /*==============================================================*/
-create table class
+create table classes
 (
-   class_id             int(11) not null auto_increment comment '班级ID',
+   classes_id             int(11) not null auto_increment comment '班级ID',
    name                 varchar(20) comment '班级名称（例如：一年级1班）',
    create_by            int(11) comment '创建者',
    create_date          datetime comment '创建时间',
    update_by            int(11) comment '更新者',
    update_date          datetime comment '更新时间',
-   primary key (class_id)
+   primary key (classes_id)
 );
 
-alter table class comment '班级表';
+alter table classes comment '班级表';
 
 /*==============================================================*/
 /* Table: exam                                                  */
