@@ -31,4 +31,15 @@ public class ExamServiceImpl extends BaseServiceImpl<Exam> implements ExamServic
 		return (ExamServiceImpl) SpringBeanFactoryUtil.getBean("examService");
 	}
 
+	/**
+	 * 根据考试名称查询考试
+	 * @param name 考试名称
+	 * @return
+	 * @author DengJinbo, 2017年10月17日.<br>
+	 */
+	@Override
+	public Exam findByName(String name) {
+		return examDao.findByName(name);
+	}
+
 }

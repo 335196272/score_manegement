@@ -8,11 +8,18 @@
 	<body>
 		<article class="page-container">
 			<form class="form form-horizontal" id="form-modify">
-				<input class="input-text" type="hidden" name="classesId" value="${entity.classesId}">
+				<input class="input-text" type="hidden" name="examId" value="${entity.examId}">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>班级名称：</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<input type="text" class="input-text" name="name" value="${entity.name}" maxlength="100">
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>考试时间：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<input type="text" name="examTime" value="<fmt:formatDate value="${entity.examTime}" pattern="yyyy-MM-dd"/>" class="input-text Wdate" 
+						style="width:160px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', startDate:'%y-%M-%d'})">
 					</div>
 				</div>
 				

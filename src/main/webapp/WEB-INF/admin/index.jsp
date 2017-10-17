@@ -123,7 +123,7 @@
 				<dl id="menu-score">
 					<dt>
 						<span>
-							<a data-href="score/list.html" data-title="考试管理" href="javascript:void(0)"> 
+							<a data-href="exam/list.html" data-title="考试管理" href="javascript:void(0)"> 
 								<i class="Hui-iconfont Hui-iconfont-feedback2"></i>
 								<span style="font-size:16px;">考试管理</span>
 							</a>

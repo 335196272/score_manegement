@@ -45,7 +45,7 @@
   </select>
   
   <select id="count" resultType="java.lang.Integer" >
-    select count(classes_id)
+    select count(exam_id)
 	from exam
     <where>
       <if test="name != null">
@@ -81,6 +81,13 @@
     <if test="startRow != null" >
       limit #{startRow}, #{numPerPage}
     </if>
+  </select>
+  
+  <select id="findByName" resultMap="Exam">
+    select 
+    <include refid="Base_Column_List" />
+    from exam
+    where name = #{name}
   </select>
   
 </mapper>
