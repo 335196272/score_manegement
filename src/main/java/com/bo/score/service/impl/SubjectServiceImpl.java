@@ -31,6 +31,12 @@ public class SubjectServiceImpl extends BaseServiceImpl<Subject> implements Subj
 		return (SubjectServiceImpl) SpringBeanFactoryUtil.getBean("subjectService");
 	}
 
+	/**
+	 * 根据科目名称查找科目
+	 * @param name 科目名称
+	 * @return
+	 * @author DengJinbo, 2017年10月18日.<br>
+	 */
 	@Override
 	public Subject findByName(String name) {
 		return subjectDao.findByName(name);
