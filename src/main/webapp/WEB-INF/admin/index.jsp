@@ -113,7 +113,7 @@
 				<dl id="menu-password">
 					<dt>
 						<span>
-							<a data-href="7.html" data-title="科目管理" href="javascript:void(0)">
+							<a data-href="subject/list.html" data-title="科目管理" href="javascript:void(0)">
 								<i class="Hui-iconfont Hui-iconfont-system"></i>
 								<span style="font-size:16px;">科目管理</span>
 							</a>
@@ -143,7 +143,7 @@
 				<dl id="menu-borrow">
 					<dt>
 						<span>
-							<a data-href="2.html" data-title="学生管理" href="javascript:void(0)">
+							<a data-href="#" data-title="学生管理" href="javascript:void(0)">
 								<i class="Hui-iconfont Hui-iconfont-practice"></i>
 								<span style="font-size:16px;">学生管理</span>
 							</a>

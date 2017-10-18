@@ -31,4 +31,9 @@ public class SubjectServiceImpl extends BaseServiceImpl<Subject> implements Subj
 		return (SubjectServiceImpl) SpringBeanFactoryUtil.getBean("subjectService");
 	}
 
+	@Override
+	public Subject findByName(String name) {
+		return subjectDao.findByName(name);
+	}
+
 }

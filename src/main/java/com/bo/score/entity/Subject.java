@@ -2,6 +2,9 @@ package com.bo.score.entity;
 
 import java.util.Date;
 
+import com.bo.common.entity.User;
+import com.bo.common.service.impl.UserServiceImpl;
+
 /**
  * 科目实体类
  * @author DengJinbo.
@@ -98,5 +101,20 @@ public class Subject {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+	
+	/**
+	 * 获取更新者姓名
+	 */
+	private String updateName;
+
+	public String getUpdateName() {
+		User user = UserServiceImpl.instance().find(updateBy);
+		if (user != null) {
+			updateName = user.getUserName();
+		} else {
+			updateName = "system";
+		}
+		return updateName;
 	}
 }

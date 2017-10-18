@@ -10,4 +10,6 @@ import com.bo.score.entity.Subject;
  */
 public interface SubjectService extends BaseService<Subject> {
 
+	Subject findByName(String name);
+
 }

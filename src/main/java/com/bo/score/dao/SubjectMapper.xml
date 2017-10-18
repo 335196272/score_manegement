@@ -71,4 +71,10 @@
     </if>
   </select>
   
+  <select id="findByName" resultMap="Subject" >
+    select 
+    <include refid="Base_Column_List" />
+    from subject
+    where name = #{name}
+  </select>
 </mapper>

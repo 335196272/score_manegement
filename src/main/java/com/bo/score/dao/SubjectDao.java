@@ -10,4 +10,6 @@ import com.bo.score.entity.Subject;
  */
 public interface SubjectDao extends BaseDao<Subject> {
 
+	Subject findByName(String name);
+
 }
