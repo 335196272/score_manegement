@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017-10-16 22:30:25                          */
+/* Created on:     2017/10/18 9:15:51                           */
 /*==============================================================*/
 
 
@@ -15,11 +15,11 @@ drop table if exists student;
 drop table if exists subject;
 
 /*==============================================================*/
-/* Table: classes                                                 */
+/* Table: classes                                               */
 /*==============================================================*/
 create table classes
 (
-   classes_id             int(11) not null auto_increment comment '班级ID',
+   classes_id           int(11) not null auto_increment comment '班级ID',
    name                 varchar(20) comment '班级名称（例如：一年级1班）',
    create_by            int(11) comment '创建者',
    create_date          datetime comment '创建时间',
@@ -53,7 +53,8 @@ alter table exam comment '考试表';
 create table score
 (
    score_id             int(11) not null auto_increment comment '成绩ID',
-   student_number       int(11) not null comment '学号',
+   student_name         varchar(20),
+   classes_id           int(11) not null comment '班级ID',
    subject_id           int(11) not null comment '科目ID',
    exam_id              int(11) comment '考试时间',
    score                decimal(9,2) not null comment '成绩',
