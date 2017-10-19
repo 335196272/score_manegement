@@ -10,4 +10,6 @@ import com.bo.score.entity.Score;
  */
 public interface ScoreService extends BaseService<Score> {
 
+	Score findByCondition(long classesId, String studentName, long examId);
+
 }

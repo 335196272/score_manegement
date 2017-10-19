@@ -296,6 +296,13 @@
             <version>4.0.18.Final</version>  
         </dependency>
  
+ 		<!-- jxl -->
+ 		<dependency>
+			<groupId>jxl</groupId>
+			<artifactId>jxl</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+		</dependency>
   
     </dependencies>  
 </project>

@@ -31,4 +31,10 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score> implements ScoreSer
 		return (ScoreServiceImpl) SpringBeanFactoryUtil.getBean("scoreService");
 	}
 
+	@Override
+	public Score findByCondition(long classesId, String studentName, long examId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

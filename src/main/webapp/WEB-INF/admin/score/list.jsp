@@ -16,8 +16,7 @@
 		<div class="page-container">
 			<form id="searchForm" name="searchForm" action="${ROOT}/admin/score/list.html" method="get">
 				<div class="text-c">
-					<input type="text" name="studentName" id="studentName" value="${param.studentName}" placeholder=" 学生姓名" 
-						style="width:150px" class="input-text"> &nbsp;
+					<input type="text" name="studentName" id="studentName" value="${param.studentName}" placeholder=" 学生姓名" style="width:150px" class="input-text"> &nbsp;
 					<span class="select-box inline">
 						<select name="classesId" id="classesId" class="select">
 							<option value="0" ${param.classesId == '0' ? 'selected' : ''}>班级</option>
@@ -42,8 +41,8 @@
 			</form>
 			<div class="cl pd-5 bg-1 bk-gray mt-20">
 				<span class="l">
-					<a class="btn btn-primary radius" href="javascript:;" onclick="add_scoreId()">
-						<i class="Hui-iconfont Hui-iconfont-add"></i> 登记成绩
+					<a class="btn btn-primary radius" href="javascript:;" onclick="import_score()">
+						<i class="Hui-iconfont Hui-iconfont-add"></i> 导入成绩
 					</a>
 				</span>
 				<span class="r">共有数据：<strong>${total}</strong> 条，每页显示：<strong>${numPerPage}</strong> 条</span>
@@ -98,10 +97,10 @@
 			                    <td>${entity.updateName}</td>
 			                    <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                    <td class="f-16 bk-blue">
-			                    	<a title="修改" class="ml-5" href="javascript:;" onclick="edit_scoreId(${entity.scoreId})">
+			                    	<a title="修改" class="ml-5" href="javascript:;" onclick="edit_score(${entity.scoreId})">
 			                    		<i class="Hui-iconfont Hui-iconfont-edit"></i>
 			                    	</a> 
-			                    	<a title="删除" class="ml-5" href="javascript:;" onclick="del_scoreId(this, ${entity.scoreId})">
+			                    	<a title="删除" class="ml-5" href="javascript:;" onclick="del_score(this, ${entity.scoreId})">
 			                    		<i class="Hui-iconfont Hui-iconfont-del3"></i>
 			                    	</a>
 			                    </td>
@@ -141,18 +140,18 @@
 				  	}  
 				});
 			} 
-			// 添加
-			function add_scoreId() {
+			// 导入
+			function import_score() {
 				layer.open({
 			      	type: 2,
 					title: '添加成绩',
 					maxmin: true,
 					area: ['450px', '400px'],
-					content: 'toAdd.html'
+					content: 'toImport.html'
 				});
 			}
 			// 修改
-			function edit_scoreId(id) {
+			function edit_score(id) {
 				layer.open({
 			      	type: 2,
 					title: '修改成绩',
@@ -162,7 +161,7 @@
 				});
 			}
 			//删除
-			function del_scoreId(obj, id) {
+			function del_score(obj, id) {
 				layer.confirm('确认要删除吗？', function(index) {
 					$.ajax({
 						type: 'GET',
