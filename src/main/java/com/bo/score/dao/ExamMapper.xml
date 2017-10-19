@@ -90,4 +90,10 @@
     where name = #{name}
   </select>
   
+  <select id="listAllExam" resultMap="Exam">
+    select 
+    <include refid="Base_Column_List" />
+    from exam
+    order by exam_time desc
+  </select>
 </mapper>

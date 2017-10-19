@@ -1,5 +1,7 @@
 package com.bo.score.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -40,6 +42,11 @@ public class ExamServiceImpl extends BaseServiceImpl<Exam> implements ExamServic
 	@Override
 	public Exam findByName(String name) {
 		return examDao.findByName(name);
+	}
+
+	@Override
+	public List<Exam> listAllExam() {
+		return examDao.listAllExam();
 	}
 
 }

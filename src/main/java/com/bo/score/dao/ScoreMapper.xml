@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bo.score.dao.ScoreDao">
+  <resultMap id="Score" type="com.bo.score.entity.Score">
+    <id column="score_id" jdbcType="BIGINT" property="scoreId" />
+    <result column="student_name" jdbcType="VARCHAR" property="studentName" />
+    <result column="classes_id" jdbcType="BIGINT" property="classesId" />
+    <result column="exam_id" jdbcType="BIGINT" property="examId" />
+    <result column="chinese" jdbcType="DECIMAL" property="chinese" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    score_id, student_name, classes_id, exam_id, chinese, create_by, create_date, 
+    update_by, update_date
+  </sql>
+  
+  <insert id="create" parameterType="com.bo.score.entity.Score">
+    insert into score (score_id, student_name, classes_id, 
+      exam_id, chinese, create_by, create_date, update_by, update_date)
+    values (#{scoreId}, #{studentName}, #{classesId}, 
+      #{examId}, #{chinese}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+  </insert>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from score
+    where score_id = #{scoreId}
+  </delete>
+  
+  <update id="update" parameterType="com.bo.score.entity.Score">
+    update score
+    set student_name = #{studentName},
+      classes_id = #{classesId},
+      exam_id = #{examId},
+      chinese = #{chinese},
+      create_by = #{createBy},
+      create_date = #{createDate},
+      update_by = #{updateBy},
+      update_date = #{updateDate}
+    where score_id = #{scoreId}
+  </update>
+  
+  <select id="find" parameterType="java.lang.Long" resultMap="Score">
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    where score_id = #{scoreId}
+  </select>
+  
+  <select id="count" resultType="java.lang.Integer" >
+    select count(score_id)
+	from score
+    <where>
+      <if test="studentName != null">
+        student_name like concat('%',#{studentName},'%')
+      </if>
+      <if test="classesId != null and classesId > 0">
+        and classes_id = #{classesId}
+      </if>
+      <if test="examId != null and examId > 0">
+        and exam_id = #{examId}
+      </if>
+    </where>
+  </select>
+  
+  <select id="list" resultMap="Score" >
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    <where>
+      <if test="studentName != null">
+        student_name like concat('%',#{studentName},'%')
+      </if>
+      <if test="classesId != null and classesId > 0">
+        and classes_id = #{classesId}
+      </if>
+      <if test="examId != null and examId > 0">
+        and exam_id = #{examId}
+      </if>
+    </where>
+    order by classes_id asc
+    <if test="orderField != null" >
+      , ${orderField} ${orderDirection} 
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow}, #{numPerPage} 
+    </if>
+  </select>
+  
+</mapper>

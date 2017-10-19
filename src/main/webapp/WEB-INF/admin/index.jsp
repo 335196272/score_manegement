@@ -87,30 +87,10 @@
 									<span style="font-size:16px;">支出趋势图</span>
 								</a>
 							</li>
-							<li>
-								<a data-href="charts/expensesAndRevenue.html" data-title="年度收支统计图" href="javascript:void(0)">
-									<span style="font-size:16px;">年度收支统计图</span>
-								</a>
-							</li>
-							<li>
-								<a data-href="charts/categoryStatistics.html" data-title="分类支出统计图" href="javascript:void(0)">
-									<span style="font-size:16px;">分类支出统计图</span>
-								</a>
-							</li>
-							<li>
-								<a data-href="charts/yearStatistics.html" data-title="往年收支比较" href="javascript:void(0)">
-									<span style="font-size:16px;">往年收支比较</span>
-								</a>
-							</li>
-							<li>
-								<a data-href="charts/payMethodStatistics.html" data-title="支付方式统计图" href="javascript:void(0)">
-									<span style="font-size:16px;">支付方式统计图</span>
-								</a>
-							</li>
 						</ul>
 					</dd>
 				</dl>
-				<dl id="menu-password">
+				<!-- <dl id="menu-password">
 					<dt>
 						<span>
 							<a data-href="subject/list.html" data-title="科目管理" href="javascript:void(0)">
@@ -119,7 +99,7 @@
 							</a>
 						</span>
 					</dt>
-				</dl>
+				</dl> -->
 				<dl id="menu-score">
 					<dt>
 						<span>
@@ -140,7 +120,7 @@
 						</span>
 					</dt>
 				</dl>
-				<dl id="menu-borrow">
+				<!-- <dl id="menu-borrow">
 					<dt>
 						<span>
 							<a data-href="#" data-title="学生管理" href="javascript:void(0)">
@@ -149,7 +129,7 @@
 							</a>
 						</span>
 					</dt>
-				</dl>
+				</dl> -->
 				<dl id="menu-system">
 					<dt>
 						<i class="Hui-iconfont Hui-iconfont-manage2"></i>
@@ -160,7 +140,7 @@
 						<ul>
 							<li>
 								<a data-href="setting/list.html" data-title="系统设置" href="javascript:void(0)">
-									<span style="font-size:16px;">系统设置
+									<span style="font-size:16px;">系统设置</span>
 								</a>
 							</li>
 							<li>

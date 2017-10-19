@@ -1,5 +1,7 @@
 package com.bo.score.dao;
 
+import java.util.List;
+
 import com.bo.common.dao.BaseDao;
 import com.bo.score.entity.Exam;
 
@@ -17,5 +19,7 @@ public interface ExamDao extends BaseDao<Exam> {
 	 * @author DengJinbo, 2017年10月17日.<br>
 	 */
 	Exam findByName(String name);
+
+	List<Exam> listAllExam();
 
 }

@@ -1,5 +1,7 @@
 package com.bo.score.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -42,4 +44,8 @@ public class ClassesServiceImpl extends BaseServiceImpl<Classes> implements Clas
 		return classesDao.findByName(name);
 	}
 
+	@Override
+	public List<Classes> listAllClasses() {
+		return classesDao.listAllClasses();
+	}
 }

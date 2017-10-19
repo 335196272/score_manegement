@@ -1,5 +1,7 @@
 package com.bo.score.service;
 
+import java.util.List;
+
 import com.bo.common.service.BaseService;
 import com.bo.score.entity.Exam;
 
@@ -17,5 +19,7 @@ public interface ExamService extends BaseService<Exam> {
 	 * @author DengJinbo, 2017年10月17日.<br>
 	 */
 	Exam findByName(String name);
+
+	List<Exam> listAllExam();
 
 }

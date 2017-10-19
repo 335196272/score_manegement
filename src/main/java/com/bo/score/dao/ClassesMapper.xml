@@ -88,4 +88,10 @@
     where name = #{name}
   </select>
   
+  <select id="listAllClasses" resultMap="Classes" >
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    order by create_date desc
+  </select>
 </mapper>

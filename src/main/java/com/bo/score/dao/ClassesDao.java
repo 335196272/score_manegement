@@ -1,5 +1,7 @@
 package com.bo.score.dao;
 
+import java.util.List;
+
 import com.bo.common.dao.BaseDao;
 import com.bo.score.entity.Classes;
 
@@ -17,5 +19,7 @@ public interface ClassesDao extends BaseDao<Classes> {
 	 * @author DengJinbo, 2017年10月17日.<br>
 	 */
 	Classes findByName(String name);
+
+	List<Classes> listAllClasses();
 
 }
