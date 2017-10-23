@@ -10,6 +10,14 @@ import com.bo.score.entity.Score;
  */
 public interface ScoreService extends BaseService<Score> {
 
+	/**
+	 * 根据条件查询成绩
+	 * @param classesId 班级ID
+	 * @param studentName 学生姓名
+	 * @param examId 考试
+	 * @return
+	 * @author DengJinbo, 2017年10月20日.<br>
+	 */
 	Score findByCondition(long classesId, String studentName, long examId);
 
 }

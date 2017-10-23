@@ -7,33 +7,34 @@
 	</head>
 	<body>
 		<article class="page-container">
-			<form class="form form-horizontal" id="form-add">
+			<form class="form form-horizontal" id="form-import">
 				<div class="row cl">
-					<select name="classesId" class="select">
-						<option value="0" ${param.classesId == '0' ? 'selected' : ''}>选择班级</option>
-						<c:forEach var="classes" items="${classesList}">
-							<option value="${classes.classesId}" ${param.classesId == classes.classesId ? 'selected' : ''}>${classes.name}</option>
-						</c:forEach>
-					</select>
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>班级：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<select name="classesId" id="classesId" class="select">
+							<option value="0" ${param.classesId == '0' ? 'selected' : ''}>选择班级</option>
+							<c:forEach var="classes" items="${classesList}">
+								<option value="${classes.classesId}" ${param.classesId == classes.classesId ? 'selected' : ''}>${classes.name}</option>
+							</c:forEach>
+						</select>
+					</div>
 				</div>
 				<div class="row cl">
-					<select name="examId" class="select">
-						<option value="0" ${param.examId == '0' ? 'selected' : ''}>选择考试</option>
-						<c:forEach var="exam" items="${examList}">
-							<option value="${exam.examId}" ${param.examId == exam.examId ? 'selected' : ''}>${exam.name}</option>
-						</c:forEach>
-					</select>
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>考试：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<select name="examId" id="examId" class="select">
+							<option value="0" ${param.examId == '0' ? 'selected' : ''}>选择考试</option>
+							<c:forEach var="exam" items="${examList}">
+								<option value="${exam.examId}" ${param.examId == exam.examId ? 'selected' : ''}>${exam.name}</option>
+							</c:forEach>
+						</select>
+					</div>
 				</div>
 				<div class="row cl">
-				    <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>学生成绩：</label>
-				    <div class="formControls col-xs-8 col-sm-9">
-				     	<span class="btn-upload">
-						  	<a href="javascript:void();" class="btn btn-primary radius">
-						  		<i class="Hui-iconfont">&#xe642;</i> 浏览文件
-						  	</a>
-						  	<input name="scoreFile" class="input-file" type="file" multiple>
-						</span>
-				    </div>
+					<label class="form-label col-xs-4 col-sm-3">学生成绩：</label>
+					<div class="formControls col-xs-8 col-sm-9"> 
+						<input type="file" name="scoreFile" id="scoreFile"/>
+					</div>
 				</div>
 				
 				<div class="row cl">
@@ -49,7 +50,7 @@
 		<script type="text/javascript">
 			// 校验并提交表单
 			$(function() {
-				$("#form-add").validate({
+				$("#form-import").validate({
 					rules : {
 						classesId : {
 							required : true
@@ -70,7 +71,11 @@
 							dataType : "json",
 							url : "importFile.html" ,
 							success : function(data) {
-								layer.msg(data.msg, {icon:1, time:1000}, next);
+								if (data.status == 200) {
+									layer.msg(data.msg, {icon:1, time:3000}, next);
+								} else {
+									layer.msg(data.msg, {icon:2, time:2000});
+								}
 							},
 			                error: function(data) {
 								layer.msg('系统发生错误!', {icon:2, time:2000});

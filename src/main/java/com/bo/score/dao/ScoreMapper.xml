@@ -54,7 +54,7 @@
 	from score
     <where>
       <if test="studentName != null">
-        student_name like concat('%',#{studentName},'%')
+        student_name = #{studentName}
       </if>
       <if test="classesId != null and classesId > 0">
         and classes_id = #{classesId}
@@ -71,7 +71,7 @@
     from score
     <where>
       <if test="studentName != null">
-        student_name like concat('%',#{studentName},'%')
+        student_name = #{studentName}
       </if>
       <if test="classesId != null and classesId > 0">
         and classes_id = #{classesId}
@@ -80,7 +80,7 @@
         and exam_id = #{examId}
       </if>
     </where>
-    order by classes_id asc
+    order by classes_id asc, exam_id desc
     <if test="orderField != null" >
       , ${orderField} ${orderDirection} 
     </if>

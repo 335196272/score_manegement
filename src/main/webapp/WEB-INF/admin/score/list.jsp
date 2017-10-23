@@ -63,33 +63,33 @@
 					<tbody>
 						<c:forEach var="entity" varStatus="idx" items="${list}">
 							<c:if test="${idx.index == 0}">
-								<c:set var="color" value="rgb(255,204,204);" />
+								<c:set var="color" value="success" />
 							</c:if>
 							<c:if test="${idx.index > 0}">
 								<c:choose>
 									<c:when test="${entity.examId == (list[idx.index-1].examId)}">
 										<c:choose>
-											<c:when test="${color=='rgb(255,204,204);'}">
-												<c:set var="color" value="rgb(255,204,204);" />
+											<c:when test="${color=='success'}">
+												<c:set var="color" value="success" />
 											</c:when>
 											<c:otherwise>
-												<c:set var="color" value="rgb(204,204,255);" /> <!-- 橘红色  -->
+												<c:set var="color" value="danger" /> <!-- 橘红色  -->
 											</c:otherwise>
 										</c:choose>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
-											<c:when test="${color=='rgb(255,204,204);'}">
-												<c:set var="color" value="rgb(204,204,255);" /> <!-- 橘红色 -->
+											<c:when test="${color=='success'}">
+												<c:set var="color" value="danger" /> <!-- 橘红色 -->
 											</c:when>
 											<c:otherwise>
-												<c:set var="color" value="rgb(255,204,204);" />
+												<c:set var="color" value="success" />
 											</c:otherwise>
 										</c:choose>
 									</c:otherwise>
 								</c:choose>
 							</c:if>
-							<tr class="text-c" style="background-color: ${color}">
+							<tr class="text-c ${color}">
 								<td>${entity.studentName}</td>
 			                    <td>${entity.classesName}</td>
 			                    <td>${entity.examName}</td>
