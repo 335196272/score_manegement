@@ -54,7 +54,7 @@
 							<th width="100">学生</th>
 							<th width="150">班级</th>
 							<th width="200">考试</th>
-							<th width="100">语文</th>
+							<th width="100">语文成绩</th>
 							<th width="100">更新者</th>
 							<th width="150">更新时间</th>
 							<th width="150">操作</th>
