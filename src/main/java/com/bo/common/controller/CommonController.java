@@ -1,7 +1,21 @@
 package com.bo.common.controller;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bo.common.util.T;
+import com.bo.score.entity.Classes;
+import com.bo.score.entity.Exam;
+import com.bo.score.service.ClassesService;
+import com.bo.score.service.ExamService;
+import com.bo.score.service.ScoreService;
+import com.bo.score.vo.ScoreRankChartVo;
+import com.bo.score.vo.ScoreRankVo;
 
 /**
  * 公共视图控制器
@@ -11,6 +25,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CommonController {
     
+	@Resource
+	private ExamService examService;
+	
+	@Resource
+	private ScoreService scoreService;
+	
+	@Resource
+	private ClassesService classesService;
+	
 	/**
 	 * 后台首页
 	 * @return<br>
@@ -47,7 +70,17 @@ public class CommonController {
      * @author DengJinbo, 2017年9月18日.<br>
      */
     @RequestMapping("/admin/welcome.html")
-    public String welcome() {
+    public String welcome(HttpServletRequest req) {
+    	Exam exam = examService.findNewestExam();
+		long examId = T.longValue(req.getParameter("examId"), exam == null ? 0 : exam.getExamId());
+		List<Classes> classesList = classesService.listAllClasses();
+		
+		List<ScoreRankVo> scoreRankVoList = scoreService.listScoreRankVo(examId, classesList);
+		ScoreRankChartVo scoreRankChartVo = scoreService.listScoreRankChartVo(examId, classesList);
+		
+    	req.setAttribute("exam", exam);
+    	req.setAttribute("scoreRankVoList", scoreRankVoList);
+    	req.setAttribute("scoreRankChartVo", scoreRankChartVo);
     	return "admin/welcome";
     }
 }

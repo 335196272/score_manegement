@@ -89,4 +89,24 @@
     </if>
   </select>
   
+  <select id="listRankCount" resultType="java.lang.Integer">
+  	select 
+	<![CDATA[COUNT(if(t.rownum <= #{rank}, true, null))]]> 
+	from
+	(select 
+	 obj.classes_id, @rownum := @rownum + 1 as rownum
+	 from
+		(select classes_id
+		 from score
+	     <if test="examId != null and examId > 0">
+	       where exam_id = #{examId}
+	     </if>
+		 order by chinese desc
+		) obj, (select @rownum := 0) r
+	) t
+	<if test="classesId != null and classesId > 0">
+      where classes_id = #{classesId}
+    </if>
+  </select>
+  
 </mapper>

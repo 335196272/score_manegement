@@ -1,7 +1,12 @@
 package com.bo.score.service;
 
+import java.util.List;
+
 import com.bo.common.service.BaseService;
+import com.bo.score.entity.Classes;
 import com.bo.score.entity.Score;
+import com.bo.score.vo.ScoreRankChartVo;
+import com.bo.score.vo.ScoreRankVo;
 
 /**
  * 成绩业务接口
@@ -19,5 +24,23 @@ public interface ScoreService extends BaseService<Score> {
 	 * @author DengJinbo, 2017年10月20日.<br>
 	 */
 	Score findByCondition(long classesId, String studentName, long examId);
+
+	/**
+	 * 查询最近一次考试中，各个班级成绩在各分数段人数（用于统计表）
+	 * @param examId 考试ID
+	 * @param classesList 班级列表
+	 * @return
+	 * @author DengJinbo, 2017年10月25日.<br>
+	 */
+	List<ScoreRankVo> listScoreRankVo(long examId, List<Classes> classesList);
+
+	/**
+	 * 查询最近一次考试中，各个班级成绩在各分数段人数（用于统计图）
+	 * @param examId
+	 * @param classesList
+	 * @return
+	 * @author DengJinbo, 2017年10月25日.<br>
+	 */
+	ScoreRankChartVo listScoreRankChartVo(long examId, List<Classes> classesList);
 
 }

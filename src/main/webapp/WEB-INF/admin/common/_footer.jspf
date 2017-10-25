@@ -8,3 +8,4 @@
 <script type="text/javascript" src="/score/lib/jquery.validation/jquery.validate.js"></script> 
 <script type="text/javascript" src="/score/lib/jquery.validation/validate-methods.js"></script> 
 <script type="text/javascript" src="/score/lib/jquery.validation/messages_zh.js"></script>
+<script type="text/javascript" src="/score/lib/echarts/echarts.min.js"></script>
