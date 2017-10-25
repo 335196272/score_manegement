@@ -55,6 +55,7 @@
 							<th width="150">班级</th>
 							<th width="200">考试</th>
 							<th width="100">语文成绩</th>
+							<th width="80">成绩排名</th>
 							<th width="100">更新者</th>
 							<th width="150">更新时间</th>
 							<th width="150">操作</th>
@@ -63,37 +64,17 @@
 					<tbody>
 						<c:forEach var="entity" varStatus="idx" items="${list}">
 							<c:if test="${idx.index == 0}">
-								<c:set var="color" value="success" />
+								<c:set var="rank" value="1" />
 							</c:if>
 							<c:if test="${idx.index > 0}">
-								<c:choose>
-									<c:when test="${entity.examId == (list[idx.index-1].examId)}">
-										<c:choose>
-											<c:when test="${color=='success'}">
-												<c:set var="color" value="success" />
-											</c:when>
-											<c:otherwise>
-												<c:set var="color" value="danger" /> <!-- 橘红色  -->
-											</c:otherwise>
-										</c:choose>
-									</c:when>
-									<c:otherwise>
-										<c:choose>
-											<c:when test="${color=='success'}">
-												<c:set var="color" value="danger" /> <!-- 橘红色 -->
-											</c:when>
-											<c:otherwise>
-												<c:set var="color" value="success" />
-											</c:otherwise>
-										</c:choose>
-									</c:otherwise>
-								</c:choose>
+								<c:set var="rank" value="${rank + 1}" />
 							</c:if>
-							<tr class="text-c ${color}">
+							<tr class="text-c success">
 								<td>${entity.studentName}</td>
 			                    <td>${entity.classesName}</td>
 			                    <td>${entity.examName}</td>
 			                    <td>${entity.chinese}</td>
+			                    <td>${rank}</td>
 			                    <td>${entity.updateName}</td>
 			                    <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                    <td class="f-16 bk-blue">

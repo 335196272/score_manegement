@@ -20,6 +20,11 @@ public interface ExamDao extends BaseDao<Exam> {
 	 */
 	Exam findByName(String name);
 
+	/**
+	 * 查找所有的考试
+	 * @return
+	 * @author DengJinbo, 2017年10月25日.<br>
+	 */
 	List<Exam> listAllExam();
 
 }

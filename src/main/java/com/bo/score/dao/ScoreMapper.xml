@@ -80,7 +80,7 @@
         and exam_id = #{examId}
       </if>
     </where>
-    order by classes_id asc, exam_id desc
+    order by classes_id asc
     <if test="orderField != null" >
       , ${orderField} ${orderDirection} 
     </if>

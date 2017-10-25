@@ -65,12 +65,13 @@ public class ScoreController {
 	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
     public String list(HttpServletRequest req) {
     	int pageNum = T.intValue(req.getParameter("pageNum"), 1);
-		int numPerPage = T.intValue(req.getParameter("numPerPage"), 15);
+		int numPerPage = T.intValue(req.getParameter("numPerPage"), 100);
 		String orderField = T.stringValue(req.getParameter("orderField"), null);
 		String orderDirection = T.stringValue(req.getParameter("orderDirection"), null);
 		String studentName = T.stringValue(req.getParameter("studentName"), null);
 		long classesId = T.longValue(req.getParameter("classesId"), 0);
-		long examId = T.longValue(req.getParameter("examId"), 0);
+		Exam exam = examService.findNewestExam();
+		long examId = T.longValue(req.getParameter("examId"), exam == null ? 0 : exam.getExamId());
 		
 		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("pageNum", pageNum);

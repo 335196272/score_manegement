@@ -1,5 +1,6 @@
 package com.bo.score.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -44,9 +45,32 @@ public class ExamServiceImpl extends BaseServiceImpl<Exam> implements ExamServic
 		return examDao.findByName(name);
 	}
 
+	/**
+	 * 查找所有的考试
+	 * @return
+	 * @author DengJinbo, 2017年10月25日.<br>
+	 */
 	@Override
 	public List<Exam> listAllExam() {
 		return examDao.listAllExam();
+	}
+
+	/**
+	 * 查找最新一期的考试
+	 * @return
+	 * @author DengJinbo, 2017年10月25日.<br>
+	 */
+	@Override
+	public Exam findNewestExam() {
+		Exam exam = null;
+		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("orderField", "exam_time");
+		parameterMap.put("orderDirection", "desc");
+		List<Exam> list = examDao.list(parameterMap);
+		if (list != null && list.size() > 0) {
+			exam = list.get(0);
+		}
+		return exam;
 	}
 
 }
