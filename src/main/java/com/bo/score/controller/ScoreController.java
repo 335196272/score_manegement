@@ -70,14 +70,14 @@ public class ScoreController {
 		String orderDirection = T.stringValue(req.getParameter("orderDirection"), null);
 		String studentName = T.stringValue(req.getParameter("studentName"), null);
 		long classesId = T.longValue(req.getParameter("classesId"), 0);
-		Exam exam = examService.findNewestExam();
+		Exam exam = examService.findNewestExam(); // 查询最近一次考试
 		long examId = T.longValue(req.getParameter("examId"), exam == null ? 0 : exam.getExamId());
 		
 		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("pageNum", pageNum);
 		parameterMap.put("numPerPage", numPerPage);
 		parameterMap.put("startRow", (pageNum - 1) * numPerPage);
-		parameterMap.put("orderField", T.isBlank(orderField) ? "chinese" : orderField);
+		parameterMap.put("orderField", T.isBlank(orderField) ? "score" : orderField);
 		parameterMap.put("orderDirection", T.isBlank(orderDirection) ? "desc" : orderDirection);
 		parameterMap.put("studentName", studentName);
 		parameterMap.put("classesId", classesId);
@@ -141,7 +141,7 @@ public class ScoreController {
 		int count = 0; // 导入成功计数器
 		int fail = 0; // 导入失败计数器
 		StringBuffer notExistsBuf = new StringBuffer(); // 必填项为空
-		StringBuffer repeatedBuf = new StringBuffer(); // 成绩已经存在（班级 + 学生 + 考试）
+		StringBuffer repeatedBuf = new StringBuffer(); // 成绩已经存在（班级 + 座号 + 考试）
 		
 		MultipartHttpServletRequest re = (MultipartHttpServletRequest) req;
         MultipartFile scoreFile = re.getFile("scoreFile");
@@ -167,25 +167,26 @@ public class ScoreController {
 				Cell cell = null;
 				
 				Score score = null; // 成绩实体
-				String studentName = ""; // 问题标题
-				BigDecimal chinese = null; // 语文成绩
+				long studentNo = 0L; // 座号
+				String studentName = ""; // 学生姓名
+				BigDecimal scores = null; // 成绩
 				
-				// 从第二行开始拿数据
-				for (int i = 1; i < rowNum; i++) {
+				// 从第三行开始拿数据
+				for (int i = 2; i < rowNum; i++) {
 					cells = sheet.getRow(i);
 					if (cells != null && cells.length > 0) {
 						score = new Score();
-						// A.学生姓名
+						// A.座号
 						if (0 < cells.length) {
 							cell = cells[0];
 						} else {
 							cell = null;
 						}
 						if (cell != null) {
-							studentName = cell.getContents();
-							if (!T.isBlank(studentName)) {
-								if (scoreService.findByCondition(classesId, studentName, examId) == null) {
-									score.setStudentName(studentName);
+							studentNo = T.longValue(cell.getContents(), 0);
+							if (studentNo > 0) {
+								if (scoreService.findByCondition(classesId, studentNo, examId) == null) {
+									score.setStudentNo(studentNo);
 								} else {
 									fail++;
 									repeatedBuf.append((i + 1) + "、");
@@ -201,15 +202,39 @@ public class ScoreController {
 							notExistsBuf.append((i + 1) + "、");
 							continue;
 						}
-						// B.语文成绩
+						// B.学生姓名
 						if (1 < cells.length) {
 							cell = cells[1];
 						} else {
 							cell = null;
 						}
 						if (cell != null) {
-							chinese = new BigDecimal(cell.getContents());
-							score.setChinese(chinese);
+							studentName = cell.getContents();
+							if (!T.isBlank(studentName)) {
+								score.setStudentName(studentName);
+							} else {
+								fail++;
+								notExistsBuf.append((i + 1) + "、");
+								continue;
+							}
+						} else {
+							fail++;
+							notExistsBuf.append((i + 1) + "、");
+							continue;
+						}
+						// C.成绩
+						if (2 < cells.length) {
+							cell = cells[2];
+						} else {
+							cell = null;
+						}
+						if (cell != null) {
+							try {
+								scores = new BigDecimal(cell.getContents());
+							} catch (Exception e) {
+								scores = new BigDecimal(0);
+							}
+							score.setScore(scores);
 						} else {
 							fail++;
 							notExistsBuf.append((i + 1) + "、");

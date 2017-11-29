@@ -3,25 +3,26 @@
 <mapper namespace="com.bo.score.dao.ScoreDao">
   <resultMap id="Score" type="com.bo.score.entity.Score">
     <id column="score_id" jdbcType="BIGINT" property="scoreId" />
+    <result column="student_no" jdbcType="BIGINT" property="studentNo" />
     <result column="student_name" jdbcType="VARCHAR" property="studentName" />
     <result column="classes_id" jdbcType="BIGINT" property="classesId" />
     <result column="exam_id" jdbcType="BIGINT" property="examId" />
-    <result column="chinese" jdbcType="DECIMAL" property="chinese" />
+    <result column="score" jdbcType="DECIMAL" property="score" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_by" jdbcType="BIGINT" property="updateBy" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    score_id, student_name, classes_id, exam_id, chinese, create_by, create_date, 
-    update_by, update_date
+    score_id, student_no, student_name, classes_id, exam_id, score, 
+    create_by, create_date, update_by, update_date
   </sql>
   
   <insert id="create" parameterType="com.bo.score.entity.Score">
-    insert into score (score_id, student_name, classes_id, 
-      exam_id, chinese, create_by, create_date, update_by, update_date)
-    values (#{scoreId}, #{studentName}, #{classesId}, 
-      #{examId}, #{chinese}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+    insert into score (score_id, student_no, student_name, classes_id, 
+      exam_id, score, create_by, create_date, update_by, update_date)
+    values (#{scoreId}, #{studentNo}, #{studentName}, #{classesId}, 
+      #{examId}, #{score}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
   </insert>
   
   <delete id="delete" parameterType="java.lang.Long">
@@ -31,10 +32,11 @@
   
   <update id="update" parameterType="com.bo.score.entity.Score">
     update score
-    set student_name = #{studentName},
+    set student_no = #{studentNo},
+      student_name = #{studentName},
       classes_id = #{classesId},
       exam_id = #{examId},
-      chinese = #{chinese},
+      score = #{score},
       create_by = #{createBy},
       create_date = #{createDate},
       update_by = #{updateBy},
@@ -53,8 +55,11 @@
     select count(score_id)
 	from score
     <where>
+      <if test="studentNo != null and studentNo > 0">
+        student_no = #{studentNo}
+      </if>
       <if test="studentName != null">
-        student_name = #{studentName}
+        and student_name = #{studentName}
       </if>
       <if test="classesId != null and classesId > 0">
         and classes_id = #{classesId}
@@ -70,8 +75,11 @@
     <include refid="Base_Column_List" />
     from score
     <where>
+      <if test="studentNo != null and studentNo > 0">
+        student_no = #{studentNo}
+      </if>
       <if test="studentName != null">
-        student_name = #{studentName}
+        and student_name = #{studentName}
       </if>
       <if test="classesId != null and classesId > 0">
         and classes_id = #{classesId}
@@ -101,7 +109,7 @@
 	     <if test="examId != null and examId > 0">
 	       where exam_id = #{examId}
 	     </if>
-		 order by chinese desc
+		 order by score desc
 		) obj, (select @rownum := 0) r
 	) t
 	<if test="classesId != null and classesId > 0">

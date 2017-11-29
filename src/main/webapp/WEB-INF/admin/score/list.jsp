@@ -27,7 +27,6 @@
 					</span> &nbsp;
 					<span class="select-box inline">
 						<select name="examId" id="examId" class="select">
-							<option value="0" ${param.examId == '0' ? 'selected' : ''}>考试</option>
 							<c:forEach var="exam" items="${examList}">
 								<option value="${exam.examId}" ${param.examId == exam.examId ? 'selected' : ''}>${exam.name}</option>
 							</c:forEach>
@@ -51,14 +50,15 @@
 				<table class="table table-border table-bordered table-bg table-hover table-sort">
 					<thead>
 						<tr class="text-c">
-							<th width="100">学生</th>
 							<th width="150">班级</th>
+							<th width="80">座号</th>
+							<th width="100">学生</th>
 							<th width="200">考试</th>
-							<th width="100">语文成绩</th>
+							<th width="100">成绩</th>
 							<th width="80">成绩排名</th>
 							<th width="100">更新者</th>
 							<th width="150">更新时间</th>
-							<th width="150">操作</th>
+							<th width="100">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -70,10 +70,13 @@
 								<c:set var="rank" value="${rank + 1}" />
 							</c:if>
 							<tr class="text-c success">
+								<td>${entity.classesName}</td>
+								<td>${entity.studentNo}</td>
 								<td>${entity.studentName}</td>
-			                    <td>${entity.classesName}</td>
 			                    <td>${entity.examName}</td>
-			                    <td>${entity.chinese}</td>
+			                    <td>
+			                    	${entity.score.unscaledValue() == 0 ? '<font color="red">缺考</font>' : entity.score}
+			                    </td>
 			                    <td>${rank}</td>
 			                    <td>${entity.updateName}</td>
 			                    <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>

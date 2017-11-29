@@ -10,7 +10,7 @@
 			<form class="form form-horizontal" id="form-modify">
 				<input class="input-text" type="hidden" name="examId" value="${entity.examId}">
 				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>班级名称：</label>
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>考试名称：</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<input type="text" class="input-text" name="name" value="${entity.name}" maxlength="100">
 					</div>

@@ -41,16 +41,16 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score> implements ScoreSer
 	/**
 	 * 根据条件查询成绩
 	 * @param classesId 班级ID
-	 * @param studentName 学生姓名
+	 * @param studentNo 座号
 	 * @param examId 考试
 	 * @return
 	 * @author DengJinbo, 2017年10月20日.<br>
 	 */
 	@Override
-	public Score findByCondition(long classesId, String studentName, long examId) {
+	public Score findByCondition(long classesId, long studentNo, long examId) {
 		Score score = null;
 		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
-		parameterMap.put("studentName", studentName);
+		parameterMap.put("studentNo", studentNo);
 		parameterMap.put("classesId", classesId);
 		parameterMap.put("examId", examId);
 		List<Score> list = this.list(parameterMap);

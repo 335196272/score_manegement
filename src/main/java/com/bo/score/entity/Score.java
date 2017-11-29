@@ -21,6 +21,11 @@ public class Score {
     private long scoreId;
 
     /**
+     * 座号
+     */
+    private long studentNo;
+    
+    /**
      * 学生姓名
      */
     private String studentName;
@@ -38,7 +43,7 @@ public class Score {
     /**
      * 分数
      */
-    private BigDecimal chinese;
+    private BigDecimal score;
 
     /**
      * 创建者
@@ -68,6 +73,14 @@ public class Score {
 		this.scoreId = scoreId;
 	}
 
+	public long getStudentNo() {
+		return studentNo;
+	}
+
+	public void setStudentNo(long studentNo) {
+		this.studentNo = studentNo;
+	}
+
 	public String getStudentName() {
 		return studentName;
 	}
@@ -92,12 +105,12 @@ public class Score {
 		this.examId = examId;
 	}
 
-	public BigDecimal getChinese() {
-		return chinese;
+	public BigDecimal getScore() {
+		return score;
 	}
 
-	public void setChinese(BigDecimal chinese) {
-		this.chinese = chinese;
+	public void setScore(BigDecimal score) {
+		this.score = score;
 	}
 
 	public long getCreateBy() {

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/10/19 16:16:50                          */
+/* Created on:     2017/11/29 14:54:34                          */
 /*==============================================================*/
 
 
@@ -53,10 +53,11 @@ alter table exam comment '考试表';
 create table score
 (
    score_id             int(11) not null auto_increment comment '成绩ID',
-   student_name         varchar(20),
+   student_no           int(11) comment '座号',
+   student_name         varchar(20) comment '学生名字',
    classes_id           int(11) not null comment '班级ID',
    exam_id              int(11) comment '考试时间',
-   chinese              decimal(9,1) not null comment '语文成绩',
+   score                decimal(9,1) not null comment '成绩',
    create_by            int(11) comment '创建者',
    create_date          datetime comment '创建时间',
    update_by            int(11) comment '更新者',
