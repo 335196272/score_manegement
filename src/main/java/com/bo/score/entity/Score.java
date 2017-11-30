@@ -44,6 +44,11 @@ public class Score {
      * 分数
      */
     private BigDecimal score;
+    
+    /**
+     * 班级排名
+     */
+    private int rank;
 
     /**
      * 创建者
@@ -111,6 +116,14 @@ public class Score {
 
 	public void setScore(BigDecimal score) {
 		this.score = score;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 
 	public long getCreateBy() {

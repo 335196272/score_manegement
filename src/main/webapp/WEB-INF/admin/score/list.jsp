@@ -51,11 +51,11 @@
 					<thead>
 						<tr class="text-c">
 							<th width="150">班级</th>
-							<th width="80">座号</th>
-							<th width="100">学生</th>
 							<th width="200">考试</th>
-							<th width="100">成绩</th>
-							<th width="80">成绩排名</th>
+							<th width="80">座号</th>
+							<th width="100">姓名</th>
+							<th width="100">总分</th>
+							<th width="80">名次</th>
 							<th width="100">更新者</th>
 							<th width="150">更新时间</th>
 							<th width="100">操作</th>
@@ -64,20 +64,41 @@
 					<tbody>
 						<c:forEach var="entity" varStatus="idx" items="${list}">
 							<c:if test="${idx.index == 0}">
-								<c:set var="rank" value="1" />
+								<c:set var="color" value="success" />
 							</c:if>
 							<c:if test="${idx.index > 0}">
-								<c:set var="rank" value="${rank + 1}" />
+								<c:choose>
+									<c:when test="${entity.classesId == list[idx.index-1].classesId}">
+										<c:choose>
+											<c:when test="${color=='success'}">
+												<c:set var="color" value="success" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="color" value="danger" />
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${color=='success'}">
+												<c:set var="color" value="danger" />
+											</c:when>
+											<c:otherwise>
+												<c:set var="color" value="success" />
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
 							</c:if>
-							<tr class="text-c success">
+							<tr class="text-c ${color}">
 								<td>${entity.classesName}</td>
+								<td>${entity.examName}</td>
 								<td>${entity.studentNo}</td>
 								<td>${entity.studentName}</td>
-			                    <td>${entity.examName}</td>
 			                    <td>
 			                    	${entity.score.unscaledValue() == 0 ? '<font color="red">缺考</font>' : entity.score}
 			                    </td>
-			                    <td>${rank}</td>
+			                    <td>${entity.rank}</td>
 			                    <td>${entity.updateName}</td>
 			                    <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                    <td class="f-16 bk-blue">

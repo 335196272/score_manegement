@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/11/29 14:54:34                          */
+/* Created on:     2017/11/30 15:14:28                          */
 /*==============================================================*/
 
 
@@ -58,6 +58,7 @@ create table score
    classes_id           int(11) not null comment '班级ID',
    exam_id              int(11) comment '考试时间',
    score                decimal(9,1) not null comment '成绩',
+   rank                 int(4) comment '班级排名',
    create_by            int(11) comment '创建者',
    create_date          datetime comment '创建时间',
    update_by            int(11) comment '更新者',

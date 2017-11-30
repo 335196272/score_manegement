@@ -143,4 +143,19 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score> implements ScoreSer
 		scoreRankChartVo.setData750(data750);
 		return scoreRankChartVo;
 	}
+
+	/**
+	 * 根据班级ID和考试ID，查询成绩表，按分数倒序排序
+	 * @param classesId 班级ID
+	 * @param examId 考试ID
+	 * @return
+	 * @author DengJinbo, 2017年11月30日.<br>
+	 */
+	@Override
+	public List<Score> listByScoreDesc(long classesId, long examId) {
+		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("classesId", classesId);
+		parameterMap.put("examId", examId);
+		return scoreDao.listByScoreDesc(parameterMap);
+	}
 }

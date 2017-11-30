@@ -77,8 +77,8 @@ public class ScoreController {
 		parameterMap.put("pageNum", pageNum);
 		parameterMap.put("numPerPage", numPerPage);
 		parameterMap.put("startRow", (pageNum - 1) * numPerPage);
-		parameterMap.put("orderField", T.isBlank(orderField) ? "score" : orderField);
-		parameterMap.put("orderDirection", T.isBlank(orderDirection) ? "desc" : orderDirection);
+		parameterMap.put("orderField", T.isBlank(orderField) ? "student_no" : orderField);
+		parameterMap.put("orderDirection", T.isBlank(orderDirection) ? "asc" : orderDirection);
 		parameterMap.put("studentName", studentName);
 		parameterMap.put("classesId", classesId);
 		parameterMap.put("examId", examId);
@@ -253,6 +253,13 @@ public class ScoreController {
 						notExistsBuf.append((i + 1) + "、");
 						continue;
 					}
+				}
+				List<Score> scoreList = scoreService.listByScoreDesc(classesId, examId);
+				Score dataScore = null;
+				for (int i = 0; i < scoreList.size(); i++) {
+					dataScore = scoreList.get(i);
+					dataScore.setRank(i + 1);
+					scoreService.update(dataScore);
 				}
 			}
 		} else {

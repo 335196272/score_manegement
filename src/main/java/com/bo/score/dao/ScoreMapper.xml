@@ -8,21 +8,22 @@
     <result column="classes_id" jdbcType="BIGINT" property="classesId" />
     <result column="exam_id" jdbcType="BIGINT" property="examId" />
     <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_by" jdbcType="BIGINT" property="updateBy" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    score_id, student_no, student_name, classes_id, exam_id, score, 
+    score_id, student_no, student_name, classes_id, exam_id, score, rank,
     create_by, create_date, update_by, update_date
   </sql>
   
   <insert id="create" parameterType="com.bo.score.entity.Score">
     insert into score (score_id, student_no, student_name, classes_id, 
-      exam_id, score, create_by, create_date, update_by, update_date)
+      exam_id, score, rank, create_by, create_date, update_by, update_date)
     values (#{scoreId}, #{studentNo}, #{studentName}, #{classesId}, 
-      #{examId}, #{score}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
+      #{examId}, #{score}, #{rank}, #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
   </insert>
   
   <delete id="delete" parameterType="java.lang.Long">
@@ -37,6 +38,7 @@
       classes_id = #{classesId},
       exam_id = #{examId},
       score = #{score},
+      rank = #{rank},
       create_by = #{createBy},
       create_date = #{createDate},
       update_by = #{updateBy},
@@ -115,6 +117,21 @@
 	<if test="classesId != null and classesId > 0">
       where classes_id = #{classesId}
     </if>
+  </select>
+  
+  <select id="listByScoreDesc" resultMap="Score" >
+    select 
+    <include refid="Base_Column_List" />
+    from score
+    <where>
+      <if test="classesId != null and classesId > 0">
+        classes_id = #{classesId}
+      </if>
+      <if test="examId != null and examId > 0">
+        and exam_id = #{examId}
+      </if>
+    </where>
+    order by score desc
   </select>
   
 </mapper>

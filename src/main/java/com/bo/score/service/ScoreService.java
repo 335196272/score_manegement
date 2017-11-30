@@ -19,7 +19,7 @@ public interface ScoreService extends BaseService<Score> {
 	 * 根据条件查询成绩
 	 * @param classesId 班级ID
 	 * @param studentNo 学生姓名
-	 * @param examId 考试
+	 * @param examId 考试ID
 	 * @return
 	 * @author DengJinbo, 2017年10月20日.<br>
 	 */
@@ -36,11 +36,20 @@ public interface ScoreService extends BaseService<Score> {
 
 	/**
 	 * 查询最近一次考试中，各个班级成绩在各分数段人数（用于统计图）
-	 * @param examId
+	 * @param examId 考试ID
 	 * @param classesList
 	 * @return
 	 * @author DengJinbo, 2017年10月25日.<br>
 	 */
 	ScoreRankChartVo listScoreRankChartVo(long examId, List<Classes> classesList);
+
+	/**
+	 * 根据班级ID和考试ID，查询成绩表，按分数倒序排序
+	 * @param classesId 班级ID
+	 * @param examId 考试ID
+	 * @return
+	 * @author DengJinbo, 2017年11月30日.<br>
+	 */
+	List<Score> listByScoreDesc(long classesId, long examId);
 
 }
