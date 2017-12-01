@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2017/11/30 15:14:28                          */
+/* Created on:     2017/12/1 16:41:53                           */
 /*==============================================================*/
 
 
@@ -38,6 +38,7 @@ create table exam
    exam_id              int(11) not null auto_increment comment '考试ID',
    name                 varchar(20) comment '考试名称（例如：2017年10月份月考）',
    exam_time            datetime comment '考试时间',
+   full_marks           int(4) comment '满分分数',
    create_by            int(11) comment '创建者',
    create_date          datetime comment '创建时间',
    update_by            int(11) comment '更新者',

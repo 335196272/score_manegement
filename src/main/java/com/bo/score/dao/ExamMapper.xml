@@ -5,19 +5,20 @@
     <id column="exam_id" jdbcType="BIGINT" property="examId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="exam_time" jdbcType="TIMESTAMP" property="examTime" />
+    <result column="full_marks" jdbcType="INTEGER" property="fullMarks" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="update_by" jdbcType="BIGINT" property="updateBy" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    exam_id, name, exam_time, create_by, create_date, update_by, update_date
+    exam_id, name, exam_time, full_marks, create_by, create_date, update_by, update_date
   </sql>
   
   <insert id="create" parameterType="com.bo.score.entity.Exam">
-    insert into exam (exam_id, name, exam_time, 
+    insert into exam (exam_id, name, exam_time, full_marks, 
       create_by, create_date, update_by, update_date)
-    values (#{examId}, #{name}, #{examTime}, 
+    values (#{examId}, #{name}, #{examTime}, #{fullMarks},
       #{createBy}, #{createDate}, #{updateBy}, #{updateDate})
   </insert>
   
@@ -30,6 +31,7 @@
     update exam
     set name = #{name},
       exam_time = #{examTime},
+      full_marks = #{fullMarks},
       create_by = #{createBy},
       create_date = #{createDate},
       update_by = #{updateBy},

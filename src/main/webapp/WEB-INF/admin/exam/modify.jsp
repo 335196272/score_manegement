@@ -22,6 +22,23 @@
 						style="width:160px;" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', startDate:'%y-%M-%d'})">
 					</div>
 				</div>
+				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>满分分数：</label>
+					<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+						<div class="radio-box">
+							<input type="radio" id="fullMarks-1" value="100" name="fullMarks" ${entity.fullMarks == 100 ? 'checked' : ''}>
+							<label for="loanFlag-1">100分</label>
+						</div>
+						<div class="radio-box">
+							<input type="radio" id="fullMarks-2" value="120" name="fullMarks" ${entity.fullMarks == 120 ? 'checked' : ''}>
+							<label for="loanFlag-2">120分</label>
+						</div>
+						<div class="radio-box">
+							<input type="radio" id="fullMarks-3" value="150" name="fullMarks" ${entity.fullMarks == 150 ? 'checked' : ''}>
+							<label for="loanFlag-3">150分</label>
+						</div>
+					</div>
+				</div>
 				
 				<div class="row cl">
 					<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
@@ -35,12 +52,23 @@
 		
 		<script type="text/javascript">
 			$(function() {
+				$('.skin-minimal input').iCheck({
+					checkboxClass : 'icheckbox-blue',
+					radioClass : 'iradio-blue',
+					increaseArea : '20%'
+				});
 				$("#form-modify").validate({
 					rules : {
 						name : {
 							required : true,
 							minlength : 2,
 							maxlength : 20
+						},
+						examTime : {
+							required : true
+						},
+						fullMarks : {
+							required : true
 						}
 					},
 					onkeyup : false,

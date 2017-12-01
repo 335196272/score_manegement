@@ -26,6 +26,11 @@ public class Exam {
      * 考试时间
      */
     private Date examTime;
+    
+    /**
+     * 满分分数
+     */
+    private int fullMarks;
 
     /**
      * 创建者
@@ -69,6 +74,14 @@ public class Exam {
 
 	public void setExamTime(Date examTime) {
 		this.examTime = examTime;
+	}
+
+	public int getFullMarks() {
+		return fullMarks;
+	}
+
+	public void setFullMarks(int fullMarks) {
+		this.fullMarks = fullMarks;
 	}
 
 	public long getCreateBy() {

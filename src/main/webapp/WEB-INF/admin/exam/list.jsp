@@ -44,6 +44,7 @@
 							<th width="100">考试ID</th>
 							<th width="300">考试名称</th>
 							<th width="100">考试时间</th>
+							<th width="100">满分分数</th>
 							<th width="100">修改人</th>
 							<th width="150">修改时间</th>
 							<th width="150">操作</th>
@@ -55,6 +56,7 @@
 								<td>${entity.examId}</td>
 			                    <td>${entity.name}</td>
 			                    <td><fmt:formatDate value="${entity.examTime}" pattern="yyyy-MM-dd"/></td>
+			                    <td>${entity.fullMarks}分</td>
 			                    <td>${entity.updateName}</td>
 			                    <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                    <td class="f-16 bk-blue">
@@ -107,7 +109,7 @@
 			      	type: 2,
 					title: '添加考试',
 					maxmin: true,
-					area: ['450px', '400px'],
+					area: ['500px', '400px'],
 					content: 'toAdd.html'
 				});
 			}
@@ -117,7 +119,7 @@
 			      	type: 2,
 					title: '修改考试',
 					maxmin: true,
-					area: ['450px', '400px'],
+					area: ['500px', '400px'],
 					content: 'toModify.html?examId=' + id
 				});
 			}

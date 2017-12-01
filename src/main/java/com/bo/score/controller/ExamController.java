@@ -92,6 +92,7 @@ public class ExamController {
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		String name = T.stringValue(req.getParameter("name"), null);
 		Date examTime = T.dateValue(req.getParameter("examTime"), "yyyy-MM-dd", T.getNow());
+		int fullMarks = T.intValue(req.getParameter("fullMarks"), 100);
 		User currentUser = (User) req.getSession().getAttribute("currentUser"); // 获取当前登录用户
 		
 		Exam findExam = examService.findByName(name);
@@ -103,6 +104,7 @@ public class ExamController {
 		Exam entity = new Exam();
 		entity.setName(name);
 		entity.setExamTime(examTime);
+		entity.setFullMarks(fullMarks);
 		entity.setCreateBy(currentUser.getUserId());
 		entity.setCreateDate(T.getNow());
 		entity.setUpdateBy(currentUser.getUserId());
