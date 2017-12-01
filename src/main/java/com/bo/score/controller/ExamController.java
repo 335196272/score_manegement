@@ -95,7 +95,7 @@ public class ExamController {
 		int fullMarks = T.intValue(req.getParameter("fullMarks"), 100);
 		User currentUser = (User) req.getSession().getAttribute("currentUser"); // 获取当前登录用户
 		
-		Exam findExam = examService.findByName(name);
+		Exam findExam = examService.findByNameAndExamTime(name, examTime);
 		if (findExam != null) {
 			resultMap.put("status", 300);
 			resultMap.put("msg", "考试已经存在，请不要重复创建！");
@@ -151,7 +151,7 @@ public class ExamController {
 			resultMap.put("msg", "修改失败，考试不存在！");
 			return resultMap;
 		}
-		Exam findExam = examService.findByName(name);
+		Exam findExam = examService.findByNameAndExamTime(name, examTime);
 		if (findExam != null && findExam.getExamId() != examId) {
 			resultMap.put("status", 300);
 			resultMap.put("msg", "考试已经存在，不允许修改！");

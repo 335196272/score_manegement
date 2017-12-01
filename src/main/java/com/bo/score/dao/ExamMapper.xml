@@ -85,11 +85,12 @@
     </if>
   </select>
   
-  <select id="findByName" resultMap="Exam">
+  <select id="findByNameAndExamTime" resultMap="Exam">
     select 
     <include refid="Base_Column_List" />
     from exam
     where name = #{name}
+    and exam_time = #{examTime}
   </select>
   
   <select id="listAllExam" resultMap="Exam">

@@ -1,5 +1,6 @@
 package com.bo.score.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.bo.common.dao.BaseDao;
@@ -13,12 +14,12 @@ import com.bo.score.entity.Exam;
 public interface ExamDao extends BaseDao<Exam> {
 
 	/**
-	 * 根据考试名称查询考试
-	 * @param name 考试名称
+	 * 根据考试名称和考试时间查询考试
+	 * @param parameterMap
 	 * @return
 	 * @author DengJinbo, 2017年10月17日.<br>
 	 */
-	Exam findByName(String name);
+	Exam findByNameAndExamTime(HashMap<String, Object> parameterMap);
 
 	/**
 	 * 查找所有的考试

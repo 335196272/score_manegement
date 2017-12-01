@@ -1,5 +1,6 @@
 package com.bo.score.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,14 +36,19 @@ public class ExamServiceImpl extends BaseServiceImpl<Exam> implements ExamServic
 	}
 
 	/**
-	 * 根据考试名称查询考试
+	 * 根据考试名称和考试时间查询考试
 	 * @param name 考试名称
+	 * @param examTime 考试时间
 	 * @return
 	 * @author DengJinbo, 2017年10月17日.<br>
+	 * @param examTime 
 	 */
 	@Override
-	public Exam findByName(String name) {
-		return examDao.findByName(name);
+	public Exam findByNameAndExamTime(String name, Date examTime) {
+		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("name", name);
+		parameterMap.put("examTime", examTime);
+		return examDao.findByNameAndExamTime(parameterMap);
 	}
 
 	/**
