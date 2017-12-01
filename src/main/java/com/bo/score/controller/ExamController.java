@@ -20,6 +20,7 @@ import com.bo.common.util.Pager;
 import com.bo.common.util.T;
 import com.bo.score.entity.Exam;
 import com.bo.score.service.ExamService;
+import com.bo.score.service.ScoreService;
 
 /**
  * 考试控制器
@@ -35,6 +36,9 @@ public class ExamController {
 	
 	@Resource
 	private LogService logService;
+	
+	@Resource
+	private ScoreService scoreService;
 	
 	/**
 	 * 列表
@@ -181,6 +185,14 @@ public class ExamController {
 		long examId = T.longValue(req.getParameter("examId"), 0);
 		User currentUser = (User) req.getSession().getAttribute("currentUser");
 		
+		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("examId", examId);
+		int count = scoreService.count(parameterMap);
+		if (count > 0) {
+			resultMap.put("status", 300);
+			resultMap.put("msg", "删除失败，该考试已经导入考试成绩，不允许删除！");
+			return resultMap;
+		}
 		Exam entity = examService.find(examId);
 		if (entity == null) {
 			resultMap.put("status", 300);
