@@ -28,4 +28,6 @@ public interface ScoreDao extends BaseDao<Score> {
 	 * @author DengJinbo, 2017年11月30日.<br>
 	 */
 	List<Score> listByScoreDesc(HashMap<String, Object> parameterMap);
+	
+	int countByScore(HashMap<String, Object> parameterMap);
 }

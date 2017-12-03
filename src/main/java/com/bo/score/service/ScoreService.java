@@ -52,4 +52,6 @@ public interface ScoreService extends BaseService<Score> {
 	 */
 	List<Score> listByScoreDesc(long classesId, long examId);
 
+	int countByScore(long classesId, long examId, int geScore, int leScore);
+
 }

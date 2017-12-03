@@ -158,4 +158,14 @@ public class ScoreServiceImpl extends BaseServiceImpl<Score> implements ScoreSer
 		parameterMap.put("examId", examId);
 		return scoreDao.listByScoreDesc(parameterMap);
 	}
+
+	@Override
+	public int countByScore(long classesId, long examId, int geScore, int leScore) {
+		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
+		parameterMap.put("classesId", classesId);
+		parameterMap.put("examId", examId);
+		parameterMap.put("ge_score", geScore);
+		parameterMap.put("le_score", leScore);
+		return scoreDao.countByScore(parameterMap);
+	}
 }

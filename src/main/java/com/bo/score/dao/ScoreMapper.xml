@@ -134,4 +134,23 @@
     order by score desc
   </select>
   
+  <select id="countByScore" resultType="java.lang.Integer" >
+    select count(score_id)
+	from score
+    <where>
+      <if test="classesId != null and classesId > 0">
+        and classes_id = #{classesId}
+      </if>
+      <if test="examId != null and examId > 0">
+        and exam_id = #{examId}
+      </if>
+      <if test="ge_score != null and ge_score > 0" >
+	    <![CDATA[and score >= #{ge_score}]]>
+      </if>
+      <if test="le_score != null and le_score > 0" >
+        <![CDATA[and score < #{le_score}]]>
+      </if>
+    </where>
+  </select>
+  
 </mapper>

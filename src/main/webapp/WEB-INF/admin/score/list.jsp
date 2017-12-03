@@ -44,6 +44,11 @@
 						<i class="Hui-iconfont Hui-iconfont-add"></i> 导入成绩
 					</a>
 				</span>
+				<span class="l">
+					<a class="btn btn-warning radius" href="javascript:;" onclick="export_score()">
+						<i class="Hui-iconfont Hui-iconfont-down"></i> 导出成绩
+					</a>
+				</span>
 				<span class="r">共有数据：<strong>${total}</strong> 条，每页显示：<strong>${numPerPage}</strong> 条</span>
 			</div>
 			<div class="mt-10">
@@ -149,11 +154,18 @@
 			function import_score() {
 				layer.open({
 			      	type: 2,
-					title: '添加成绩',
+					title: '导入成绩',
 					maxmin: true,
 					area: ['450px', '400px'],
 					content: 'toImport.html'
 				});
+			}
+			// 导出
+			function export_score() {
+				var studentName = $("#studentName").val();
+				var classesId = $("#classesId").val();
+				var examId = $("#examId").val();
+				window.location.href = 'exportFile.html?classesId=' + classesId + '&examId=' + examId;
 			}
 			// 修改
 			function edit_score(id) {
