@@ -439,12 +439,13 @@ public class ScoreController {
 	        	int	thirdLevel = scoreService.countByScore(classesId, examId, three, second); // 80 - 90
 	        	int	fourthLevel = scoreService.countByScore(classesId, examId, four, three); // 70 - 80
 	        	int	fifthLevel = scoreService.countByScore(classesId, examId, five, four); // 60 - 70
-	        	int	sixthLevel = scoreService.countByScore(classesId, examId, 0, five); // 不及格
+	        	int	sixthLevel = scoreService.countByScore(classesId, examId, 1, five); // 不及格
+	        	int	absent = scoreService.countByScore(classesId, examId, 0, 1); // 缺考人数
 	        	
 	        	rowNum ++;
 	        	row = sheet.createRow(rowNum);
 				HSSFCell cell = row.createCell(0);
-				cell.setCellValue(fullMarks + ":" + firstLevel + "人");
+				cell.setCellValue(fullMarks + "分:" + firstLevel + "人");
 				cell.setCellStyle(cellStyle);
 				rowNum ++;
 				
@@ -470,12 +471,22 @@ public class ScoreController {
 				cell = row.createCell(0);
 				cell.setCellValue(five + "分以上:" + fifthLevel + "人");
 				cell.setCellStyle(cellStyle);
-				rowNum ++;
 				
-				row = sheet.createRow(rowNum);
-				cell = row.createCell(0);
-				cell.setCellValue("不及格:" + sixthLevel + "人");
-				cell.setCellStyle(cellStyle);
+				if (sixthLevel > 0) {
+					rowNum ++;
+					row = sheet.createRow(rowNum);
+					cell = row.createCell(0);
+					cell.setCellValue("不及格:" + sixthLevel + "人");
+					cell.setCellStyle(cellStyle);
+				}
+				if (absent > 0) {
+					rowNum ++;
+					row = sheet.createRow(rowNum);
+					cell = row.createCell(0);
+					cell.setCellValue("缺考:" + absent + "人");
+					cell.setCellStyle(cellStyle);
+				}
+				
 	        }
         	if (null != workBook) {
     			workBook.write(os);
