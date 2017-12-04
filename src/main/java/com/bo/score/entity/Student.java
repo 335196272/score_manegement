@@ -2,12 +2,15 @@ package com.bo.score.entity;
 
 import java.util.Date;
 
+import com.bo.common.entity.BaseEntity;
+
 /**
  * 学生实体类
  * @author DengJinbo.
  * @Time 2017年10月17日
  */
-public class Student {
+@SuppressWarnings("serial")
+public class Student extends BaseEntity {
 	
 	/**
      * 学生ID

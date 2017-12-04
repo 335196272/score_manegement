@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bo.common.dao.SettingDao">
+<cache/>
   <resultMap id="Setting" type="com.bo.common.entity.Setting">
     <id column="setting_id" jdbcType="BIGINT" property="settingId" />
     <result column="name" jdbcType="VARCHAR" property="name" />

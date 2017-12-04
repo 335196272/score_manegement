@@ -2,6 +2,7 @@ package com.bo.score.entity;
 
 import java.util.Date;
 
+import com.bo.common.entity.BaseEntity;
 import com.bo.common.entity.User;
 import com.bo.common.service.impl.UserServiceImpl;
 
@@ -10,7 +11,8 @@ import com.bo.common.service.impl.UserServiceImpl;
  * @author DengJinbo.
  * @Time 2017年10月17日
  */
-public class Exam {
+@SuppressWarnings("serial")
+public class Exam extends BaseEntity {
 	
 	/**
 	 * 考试ID

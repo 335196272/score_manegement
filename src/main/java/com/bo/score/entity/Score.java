@@ -3,6 +3,7 @@ package com.bo.score.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.bo.common.entity.BaseEntity;
 import com.bo.common.entity.User;
 import com.bo.common.service.impl.UserServiceImpl;
 import com.bo.score.service.impl.ClassesServiceImpl;
@@ -13,7 +14,8 @@ import com.bo.score.service.impl.ExamServiceImpl;
  * @author DengJinbo.
  * @Time 2017年10月19日
  */
-public class Score {
+@SuppressWarnings("serial")
+public class Score extends BaseEntity {
 	
 	/**
 	 * 成绩ID

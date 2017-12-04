@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bo.score.dao.StudentDao">
+<cache/>
   <resultMap id="Student" type="com.bo.score.entity.Student">
     <id column="student_id" jdbcType="BIGINT" property="studentId" />
     <result column="student_number" jdbcType="BIGINT" property="studentNumber" />
