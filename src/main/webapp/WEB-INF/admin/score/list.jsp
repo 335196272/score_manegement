@@ -101,7 +101,14 @@
 								<td>${entity.studentNo}</td>
 								<td>${entity.studentName}</td>
 			                    <td>
-			                    	${entity.score.unscaledValue() == 0 ? '<font color="red">缺考</font>' : entity.score}
+			                    	<c:choose>
+										<c:when test="${entity.score.unscaledValue() == 0}">
+											<font color="red">缺考</font>
+										</c:when>
+										<c:otherwise>
+											${fn:replace(entity.score, '.0', '')}
+										</c:otherwise>
+									</c:choose>
 			                    </td>
 			                    <td>${entity.rank}</td>
 			                    <td>${entity.updateName}</td>
