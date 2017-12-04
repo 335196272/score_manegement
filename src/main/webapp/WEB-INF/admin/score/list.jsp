@@ -110,7 +110,7 @@
 										</c:otherwise>
 									</c:choose>
 			                    </td>
-			                    <td>${entity.rank}</td>
+			                    <td style="background: rgb(255,242,204)!important;">${entity.rank}</td>
 			                    <td>${entity.updateName}</td>
 			                    <td><fmt:formatDate value="${entity.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 			                    <td class="f-16 bk-blue">

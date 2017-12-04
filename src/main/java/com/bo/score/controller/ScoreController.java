@@ -265,12 +265,23 @@ public class ScoreController {
 						continue;
 					}
 				}
+				// 计算成绩排名
 				List<Score> scoreList = scoreService.listByScoreDesc(classesId, examId);
-				Score dataScore = null;
+				Score previousScore = null; // 前一个分数
+				Score currentScore = null; // 当前分数
+				int rank = 1; // 排名（分数相同，排名相同）
 				for (int i = 0; i < scoreList.size(); i++) {
-					dataScore = scoreList.get(i);
-					dataScore.setRank(i + 1);
-					scoreService.update(dataScore);
+					currentScore = scoreList.get(i);
+					if (i > 0) {
+						previousScore = scoreList.get(i - 1);
+						if (currentScore.getScore().equals(previousScore.getScore())) {
+							rank = previousScore.getRank();
+						} else {
+							rank = i + 1;
+						}
+					}
+					currentScore.setRank(rank);
+					scoreService.update(currentScore);
 				}
 			}
 		} else {
