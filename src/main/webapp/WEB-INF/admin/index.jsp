@@ -83,8 +83,8 @@
 					<dd>
 						<ul>
 							<li>
-								<a data-href="charts/expensesTrend.html" data-title="支出趋势图" href="javascript:void(0)">
-									<span style="font-size:16px;">支出趋势图</span>
+								<a data-href="" data-title="成绩趋势图" href="javascript:void(0)">
+									<span style="font-size:16px;">成绩趋势图</span>
 								</a>
 							</li>
 						</ul>

@@ -406,6 +406,7 @@ public class ScoreController {
     	        	cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框
     	        	
     	        	Score score = null;
+    	        	String scoreStr = "";
     	        	rowNum = 2; // 成绩数据从第三行开始写入
     	        	for (int i = 0; i < list.size(); i++) {
     	        		score = list.get(i);
@@ -419,8 +420,9 @@ public class ScoreController {
         				cell = row.createCell(1);
         				cell.setCellValue(score.getStudentName());
         				cell.setCellStyle(cellStyle);
+        				scoreStr = (score.getScore() + "").replace(".0", "");
         				cell = row.createCell(2);
-        				cell.setCellValue((score.getScore() + "").replace(".0", ""));
+        				cell.setCellValue(scoreStr.equals("0") ? "缺考" : scoreStr);
         				cell.setCellStyle(cellStyle);
         				cell = row.createCell(3);
         				cell.setCellValue(score.getRank());
