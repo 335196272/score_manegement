@@ -318,18 +318,17 @@ public class ScoreController {
 		if (exam == null) {
 			return null;
 		}
-		
 		HashMap<String, Object> parameterMap = new HashMap<String, Object>();
 		parameterMap.put("classesId", classesId);
 		parameterMap.put("examId", examId);
 		parameterMap.put("orderField", "student_no");
 		parameterMap.put("orderDirection", "asc");
-		List<Score> list = scoreService.list(parameterMap);
-		Score score = null;
+		List<Score> list = scoreService.list(parameterMap); // 查询成绩列表
 		
         // 开始导出数据
         String fileName = URLEncoder.encode((classes != null ? classes.getName() : "") + exam.getName() + "登记表", "UTF-8"); // 导出的文件名
-        HSSFWorkbook workBook = null; // 表格
+        HSSFWorkbook workBook = null; // 工作薄
+        HSSFSheet sheet = null; // 工作表
         HSSFRow row = null; // 每一行
         OutputStream os = null; // 输出流，创建表格过程的内容都写在输出流里
         try {
@@ -339,154 +338,186 @@ public class ScoreController {
 	        	resp.setContentType("application/vnd.ms-excel"); // 设置输出类型为excel
 	        	// 解决下载文件名包含中文时出现乱码，要先设置contentType
 	        	resp.setHeader("Content-disposition", "attachment; filename=" + new String((fileName + ".xls").getBytes(), "UTF-8"));
-	        	workBook = new HSSFWorkbook(); // 创建excel表格
-	        	HSSFSheet sheet = null; // 每张表
+	        	
+	        	workBook = new HSSFWorkbook(); // 创建工作薄
+	        	sheet = workBook.createSheet(exam.getName() + "（" + T.format(exam.getExamTime(), "MM月dd日")  + "）"); // 创建工作表
 	        	int rowNum = 0; // 行数
-	        	// 创建一张表
-	        	sheet = workBook.createSheet(exam.getName() + "（" + T.format(exam.getExamTime(), "MM月dd日")  + "）"); 
-	        	// 合并单元格
-	            CellRangeAddress region = new CellRangeAddress(0, // first row
-	                    0, // last row
-	                    0, // first column
-	                    3  // last column
-	            );
-	            sheet.addMergedRegion(region);
 	        	if (null != sheet) {
 	        		// 标题样式
 	        		HSSFCellStyle titleCellStyle = workBook.createCellStyle(); // 表格样式
-	        		titleCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 内容居中
-		        	HSSFFont titleFont = workBook.createFont();
+		        	HSSFFont titleFont = workBook.createFont(); // 字体样式
 		        	titleFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		        	titleFont.setFontName("宋体");
 		        	titleFont.setFontHeightInPoints((short)16);
 		        	titleCellStyle.setFont(titleFont);
-		        	// 创建表第一行
+		        	titleCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 内容居中
+		        	// 创建表第一行（标题）
     				row = sheet.createRow(rowNum);
     				HSSFCell titleCell = row.createCell(0);
     				titleCell.setCellValue((classes != null ? classes.getName() : "") + "语文" + exam.getName() + "登记表");
     				titleCell.setCellStyle(titleCellStyle);
+    				// 合并单元格
+    	            CellRangeAddress region = new CellRangeAddress(0, // first row
+    	                    0, // last row
+    	                    0, // first column
+    	                    3  // last column
+    	            );
+    	            sheet.addMergedRegion(region);
+    	            sheet.setColumnWidth(1, 20 * 256); // 设置标题表格（第一列）的宽度
     				
     				// 表头样式
-	        		HSSFCellStyle headCellStyle = workBook.createCellStyle();
-	        		headCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 内容居中
-		        	HSSFFont headFont = workBook.createFont();
+	        		HSSFCellStyle headCellStyle = workBook.createCellStyle(); // 表格样式
+		        	HSSFFont headFont = workBook.createFont(); // 字体样式
 		        	headFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
 		        	headFont.setFontName("宋体");
 		        	headFont.setFontHeightInPoints((short)12);
 		        	headCellStyle.setFont(headFont);
+		        	headCellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 内容居中
 		        	headCellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框    
 		        	headCellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); // 左边框    
 		        	headCellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); //上边框    
 		        	headCellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框 
-		        	
-		        	// 创建表第二行
+		        	// 创建表第二行（表头）
     				rowNum = 1;
     				row = sheet.createRow(rowNum);
-    				HSSFCell cell = row.createCell(0);
-    				cell.setCellValue("座号");
-    				cell.setCellStyle(headCellStyle);
-    				cell = row.createCell(1);
-    				cell.setCellValue("姓名");
-    				cell.setCellStyle(headCellStyle);
-    				cell = row.createCell(2);
-    				cell.setCellValue("总分");
-    				cell.setCellStyle(headCellStyle);
-    				cell = row.createCell(3);
-    				cell.setCellValue("名次");
-    				cell.setCellStyle(headCellStyle);
-    				rowNum = 2; // 下一行开始为第三行
+    				HSSFCell headCell = row.createCell(0);
+    				headCell.setCellValue("座号");
+    				headCell.setCellStyle(headCellStyle);
+    				headCell = row.createCell(1);
+    				headCell.setCellValue("姓名");
+    				headCell.setCellStyle(headCellStyle);
+    				headCell = row.createCell(2);
+    				headCell.setCellValue("总分");
+    				headCell.setCellStyle(headCellStyle);
+    				headCell = row.createCell(3);
+    				headCell.setCellValue("名次");
+    				headCell.setCellStyle(headCellStyle);
+    				
+    				// 数据内容样式
+            		HSSFCellStyle cellStyle = workBook.createCellStyle(); // 表格样式
+    	        	HSSFFont font = workBook.createFont(); // 字体样式
+    	        	font.setFontName("宋体");
+    	        	font.setFontHeightInPoints((short)12);
+    	        	cellStyle.setFont(font);
+    	        	cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 内容居中
+    	        	cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框 
+    	        	cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); // 左边框
+    	        	cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); // 上边框
+    	        	cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框
+    	        	
+    	        	Score score = null;
+    	        	rowNum = 2; // 成绩数据从第三行开始写入
+    	        	for (int i = 0; i < list.size(); i++) {
+    	        		score = list.get(i);
+    	        		if (null == score) {
+    	        			continue;
+    	        		}
+    	        		row = sheet.createRow(rowNum);
+    	        		HSSFCell cell = row.createCell(0);
+    	        		cell.setCellValue(score.getStudentNo());
+        				cell.setCellStyle(cellStyle);
+        				cell = row.createCell(1);
+        				cell.setCellValue(score.getStudentName());
+        				cell.setCellStyle(cellStyle);
+        				cell = row.createCell(2);
+        				cell.setCellValue((score.getScore() + "").replace(".0", ""));
+        				cell.setCellStyle(cellStyle);
+        				cell = row.createCell(3);
+        				cell.setCellValue(score.getRank());
+        				cell.setCellStyle(cellStyle);
+    	        		rowNum ++;
+    	        	}
+    	        	
+    	        	// 分数段人数统计
+    	        	int fullMarks = exam.getFullMarks();
+    	        	int excellent = (int) (fullMarks * 0.9);
+    	        	int good = (int) (fullMarks * 0.8);
+    	        	int commonly = (int) (fullMarks * 0.7);
+    	        	int bad = (int) (fullMarks * 0.6);
+    	        	
+    	        	int	firstLevel = scoreService.countByScore(classesId, examId, fullMarks, fullMarks + 1); // 满分
+    	        	int	secondLevel = scoreService.countByScore(classesId, examId, excellent, fullMarks); // 90 - 100
+    	        	int	thirdLevel = scoreService.countByScore(classesId, examId, good, excellent); // 80 - 90
+    	        	int	fourthLevel = scoreService.countByScore(classesId, examId, commonly, good); // 70 - 80
+    	        	int	fifthLevel = scoreService.countByScore(classesId, examId, bad, commonly); // 60 - 70
+    	        	int	sixthLevel = scoreService.countByScore(classesId, examId, 1, bad); // 不及格
+    	        	int	absentCount = scoreService.countByScore(classesId, examId, 0, 1); // 缺考
+    	        	
+    	        	sheet.setColumnWidth(5, 20 * 256); // 设置统计内容列（第六列）的宽度
+    	        	// 统计内容样式
+            		HSSFCellStyle statisticCellStyle = workBook.createCellStyle(); // 表格样式
+    	        	HSSFFont statisticFont = workBook.createFont(); // 字体样式
+    	        	statisticFont.setFontName("宋体");
+    	        	statisticFont.setFontHeightInPoints((short)12);
+    	        	statisticCellStyle.setFont(statisticFont);
+    	        	
+    	        	row = sheet.getRow(2);
+    	        	if (null == row) {
+    	        		row = sheet.createRow(2);
+    	        	}
+    				HSSFCell cell = row.createCell(5);
+    				cell.setCellValue(fullMarks + "分：" + firstLevel + "人");
+    				cell.setCellStyle(statisticCellStyle);
+    				rowNum ++;
+    				
+    				row = sheet.getRow(3);
+    				if (null == row) {
+    	        		row = sheet.createRow(3);
+    	        	}
+    				cell = row.createCell(5);
+    				cell.setCellValue(excellent + "-" + fullMarks + "阶段：" + secondLevel + "人");
+    				cell.setCellStyle(statisticCellStyle);
+    				rowNum ++;
+    				
+    				row = sheet.getRow(4);
+    				if (null == row) {
+    	        		row = sheet.createRow(4);
+    	        	}
+    				cell = row.createCell(5);
+    				cell.setCellValue(good + "-" + excellent + "阶段：" + thirdLevel + "人");
+    				cell.setCellStyle(statisticCellStyle);
+    				rowNum ++;
+    				
+    				row = sheet.getRow(5);
+    				if (null == row) {
+    	        		row = sheet.createRow(5);
+    	        	}
+    				cell = row.createCell(5);
+    				cell.setCellValue(commonly + "-" + good + "阶段：" + fourthLevel + "人");
+    				cell.setCellStyle(statisticCellStyle);
+    				rowNum ++;
+    				
+    				row = sheet.getRow(6);
+    				if (null == row) {
+    	        		row = sheet.createRow(6);
+    	        	}
+    				cell = row.createCell(5);
+    				cell.setCellValue(bad + "-" + commonly + "阶段：" + fifthLevel + "人");
+    				cell.setCellStyle(statisticCellStyle);
+    				rowNum ++;
+    				
+    				if (sixthLevel > 0) {
+    					row = sheet.getRow(7);
+    					if (null == row) {
+        	        		row = sheet.createRow(7);
+        	        	}
+    					cell = row.createCell(5);
+    					cell.setCellValue("不及格：" + sixthLevel + "人");
+    					cell.setCellStyle(statisticCellStyle);
+    					rowNum ++;
+    				}
+    				
+    				if (absentCount > 0) {
+    					row = sheet.getRow(8);
+    					if (null == row) {
+        	        		row = sheet.createRow(8);
+        	        	}
+    					cell = row.createCell(5);
+    					cell.setCellValue("缺考：" + absentCount + "人");
+    					cell.setCellStyle(statisticCellStyle);
+    					rowNum ++;
+    				}
     			}
-        		HSSFCellStyle cellStyle = workBook.createCellStyle(); // 表格样式
-        		cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 内容居中
-	        	HSSFFont font = workBook.createFont(); //字体样式
-	        	font.setFontName("宋体");
-	        	font.setFontHeightInPoints((short)12);
-	        	cellStyle.setFont(font);
-	        	cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); // 下边框    
-	        	cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN); // 左边框    
-	        	cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN); //上边框    
-	        	cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN); // 右边框   
-	        	for (int i = 0; i < list.size(); i++) {
-	        		score = list.get(i);
-	        		if (null == score) {
-	        			continue;
-	        		}
-	        		// 写入成绩数据
-	        		row = sheet.createRow(rowNum);
-	        		HSSFCell cell = row.createCell(0);
-	        		cell.setCellValue(score.getStudentNo());
-    				cell.setCellStyle(cellStyle);
-    				cell = row.createCell(1);
-    				cell.setCellValue(score.getStudentName());
-    				cell.setCellStyle(cellStyle);
-    				cell = row.createCell(2);
-    				cell.setCellValue((score.getScore() + "").replace(".0", ""));
-    				cell.setCellStyle(cellStyle);
-    				cell = row.createCell(3);
-    				cell.setCellValue(score.getRank());
-    				cell.setCellStyle(cellStyle);
-	        		rowNum ++;
-	        	}
-	        	// 分数段人数统计
-	        	int fullMarks = exam.getFullMarks();
-	        	int second = (int) (fullMarks * 0.9);
-	        	int three = (int) (fullMarks * 0.8);
-	        	int four = (int) (fullMarks * 0.7);
-	        	int five = (int) (fullMarks * 0.6);
-	        	
-	        	int	firstLevel = scoreService.countByScore(classesId, examId, fullMarks, fullMarks + 1); // 满分
-	        	int	secondLevel = scoreService.countByScore(classesId, examId, second, fullMarks); // 90 - 100
-	        	int	thirdLevel = scoreService.countByScore(classesId, examId, three, second); // 80 - 90
-	        	int	fourthLevel = scoreService.countByScore(classesId, examId, four, three); // 70 - 80
-	        	int	fifthLevel = scoreService.countByScore(classesId, examId, five, four); // 60 - 70
-	        	int	sixthLevel = scoreService.countByScore(classesId, examId, 1, five); // 不及格
-	        	int	absent = scoreService.countByScore(classesId, examId, 0, 1); // 缺考人数
-	        	
-	        	rowNum ++;
-	        	row = sheet.createRow(rowNum);
-				HSSFCell cell = row.createCell(0);
-				cell.setCellValue(fullMarks + "分:" + firstLevel + "人");
-				cell.setCellStyle(cellStyle);
-				rowNum ++;
-				
-				row = sheet.createRow(rowNum);
-				cell = row.createCell(0);
-				cell.setCellValue(second + "分以上:" + secondLevel + "人");
-				cell.setCellStyle(cellStyle);
-				rowNum ++;
-				
-				row = sheet.createRow(rowNum);
-				cell = row.createCell(0);
-				cell.setCellValue(three + "分以上:" + thirdLevel + "人");
-				cell.setCellStyle(cellStyle);
-				rowNum ++;
-				
-				row = sheet.createRow(rowNum);
-				cell = row.createCell(0);
-				cell.setCellValue(four + "分以上:" + fourthLevel + "人");
-				cell.setCellStyle(cellStyle);
-				rowNum ++;
-				
-				row = sheet.createRow(rowNum);
-				cell = row.createCell(0);
-				cell.setCellValue(five + "分以上:" + fifthLevel + "人");
-				cell.setCellStyle(cellStyle);
-				
-				if (sixthLevel > 0) {
-					rowNum ++;
-					row = sheet.createRow(rowNum);
-					cell = row.createCell(0);
-					cell.setCellValue("不及格:" + sixthLevel + "人");
-					cell.setCellStyle(cellStyle);
-				}
-				if (absent > 0) {
-					rowNum ++;
-					row = sheet.createRow(rowNum);
-					cell = row.createCell(0);
-					cell.setCellValue("缺考:" + absent + "人");
-					cell.setCellStyle(cellStyle);
-				}
-				
 	        }
         	if (null != workBook) {
     			workBook.write(os);
