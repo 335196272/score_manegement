@@ -102,7 +102,7 @@
 								<td>${entity.studentName}</td>
 			                    <td>
 			                    	<c:choose>
-										<c:when test="${entity.score.unscaledValue() == 0}">
+										<c:when test="${entity.score == 0}">
 											<font color="red">缺考</font>
 										</c:when>
 										<c:otherwise>

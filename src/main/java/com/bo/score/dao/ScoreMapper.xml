@@ -8,7 +8,7 @@
     <result column="student_name" jdbcType="VARCHAR" property="studentName" />
     <result column="classes_id" jdbcType="BIGINT" property="classesId" />
     <result column="exam_id" jdbcType="BIGINT" property="examId" />
-    <result column="score" jdbcType="DECIMAL" property="score" />
+    <result column="score" jdbcType="FLOAT" property="score" />
     <result column="rank" jdbcType="INTEGER" property="rank" />
     <result column="create_by" jdbcType="BIGINT" property="createBy" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />

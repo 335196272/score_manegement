@@ -3,7 +3,6 @@ package com.bo.score.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -180,7 +179,7 @@ public class ScoreController {
 				Score score = null; // 成绩实体
 				long studentNo = 0L; // 座号
 				String studentName = ""; // 学生姓名
-				BigDecimal scores = null; // 成绩
+				double scores = 0; // 成绩
 				
 				// 从第三行开始拿数据
 				for (int i = 2; i < rowNum; i++) {
@@ -241,9 +240,11 @@ public class ScoreController {
 						}
 						if (cell != null) {
 							try {
-								scores = new BigDecimal(cell.getContents());
+								String temp = cell.getContents();
+								System.out.println("=====" + temp);
+								scores = Float.valueOf(temp);
 							} catch (Exception e) {
-								scores = new BigDecimal(0);
+								scores = 0;
 							}
 							score.setScore(scores);
 						} else {
@@ -274,7 +275,7 @@ public class ScoreController {
 					currentScore = scoreList.get(i);
 					if (i > 0) {
 						previousScore = scoreList.get(i - 1);
-						if (currentScore.getScore().equals(previousScore.getScore())) {
+						if (currentScore.getScore() == previousScore.getScore()) {
 							rank = previousScore.getRank();
 						} else {
 							rank = i + 1;

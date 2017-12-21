@@ -1,6 +1,5 @@
 package com.bo.score.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import com.bo.common.entity.BaseEntity;
@@ -45,7 +44,7 @@ public class Score extends BaseEntity {
     /**
      * 分数
      */
-    private BigDecimal score;
+    private double score;
     
     /**
      * 班级排名
@@ -112,11 +111,11 @@ public class Score extends BaseEntity {
 		this.examId = examId;
 	}
 
-	public BigDecimal getScore() {
+	public double getScore() {
 		return score;
 	}
 
-	public void setScore(BigDecimal score) {
+	public void setScore(double score) {
 		this.score = score;
 	}
 
